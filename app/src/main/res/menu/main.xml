@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item android:id="@+id/call_us"
+        android:orderInCategory="100"
+        android:icon="@drawable/ic_call_white"
+        app:showAsAction="always"
+        android:title="call"
+         />
+    <item android:id="@+id/cart"
+        android:orderInCategory="100"
+        android:icon="@drawable/ic_shopping_cart_white"
+        android:title="cart"
+        app:showAsAction="always"/>
+
+</menu>

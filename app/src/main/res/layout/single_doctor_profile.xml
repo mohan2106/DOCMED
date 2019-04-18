@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:elevation="4sp"
+    android:background="#ffffff"
+    android:layout_marginTop="5sp"
+    app:layout_goneMarginBottom="5sp"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/doctor_image"
+        android:layout_width="80dp"
+        android:layout_height="100dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_action_profile_image" />
+
+    <TextView
+        android:id="@+id/doctor_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="Name"
+        android:textSize="18sp"
+        app:layout_constraintStart_toEndOf="@+id/doctor_image"
+        app:layout_constraintTop_toTopOf="@+id/doctor_image" />
+
+    <TextView
+        android:id="@+id/doctor_speciality"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="Speciality"
+        app:layout_constraintStart_toEndOf="@+id/doctor_image"
+        app:layout_constraintTop_toBottomOf="@+id/doctor_name" />
+
+    <TextView
+        android:id="@+id/doctor_experience"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="Experience"
+        app:layout_constraintStart_toEndOf="@+id/doctor_image"
+        app:layout_constraintTop_toBottomOf="@+id/doctor_speciality" />
+
+    <Button
+        android:id="@+id/doctor_consult"
+        android:layout_width="wrap_content"
+        android:layout_height="40sp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/gradient_color_background"
+        android:textColor="#ffffff"
+        android:text="Consult"
+        app:layout_constraintBottom_toBottomOf="@+id/doctor_image"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <ImageView
+        android:id="@+id/doctor_map"
+        android:layout_width="20sp"
+        android:layout_height="20sp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:src="@drawable/google_maps_icon" />
+
+    <TextView
+        android:id="@+id/textView12"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:text="View Location"
+        app:layout_constraintBottom_toBottomOf="@+id/doctor_map"
+        app:layout_constraintEnd_toStartOf="@+id/doctor_map"
+        app:layout_constraintTop_toTopOf="@+id/doctor_map" />
+
+    <TextView
+        android:id="@+id/doctor_fee"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="Fee"
+        android:textSize="20sp"
+        android:textColor="#245def"
+        app:layout_constraintBottom_toBottomOf="@+id/doctor_image"
+        app:layout_constraintStart_toEndOf="@+id/doctor_image" />
+
+    <TextView
+        android:id="@+id/doctor_location"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="8dp"
+        android:text="Address"
+        app:layout_constraintBottom_toTopOf="@+id/doctor_consult"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <RatingBar
+        android:id="@+id/ratingBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/doctor_fee"
+        style="@style/Base.Widget.AppCompat.RatingBar.Small"
+        android:rating="4.5"
+        android:progressTint="#d6962f"
+        app:layout_constraintStart_toEndOf="@+id/doctor_image"
+        app:layout_constraintTop_toBottomOf="@+id/doctor_experience" />
+
+    <TextView
+        android:id="@+id/textView15"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="(352)"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="@+id/ratingBar"
+        app:layout_constraintStart_toEndOf="@+id/ratingBar"
+        app:layout_constraintTop_toTopOf="@+id/ratingBar" />
+</android.support.constraint.ConstraintLayout>
