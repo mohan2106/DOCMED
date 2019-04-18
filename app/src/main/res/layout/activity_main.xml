@@ -1,27 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:background="@drawable/background_gradient"
     tools:context=".MainActivity">
 
+    <ImageView
+        android:id="@+id/imageView8"
+        android:layout_width="150sp"
+        android:layout_height="150sp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        app:srcCompat="@drawable/medicine_logo" />
+
     <TextView
+        android:id="@+id/text_view"
+        android:gravity="center"
+        android:layout_marginTop="50sp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        android:text="DOC+"
-        android:fontFamily="@font/coolveticarg"
-        android:textSize="40sp"
-        android:textColor="@color/colorAccent"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:textColor="#ffffff"
+        android:layout_marginEnd="24sp"
+        android:textSize="24sp"
+        android:layout_marginStart="24dp"
+        android:text="India's no.1 platform for booking appointment and managing realtime" />
 
-</android.support.constraint.ConstraintLayout>
+    <Button
+        android:id="@+id/sign_in_btn"
+        android:layout_marginTop="50sp"
+        android:layout_width="match_parent"
+        android:background="#e25108"
+        android:text="SIgn in"
+        android:textColor="#ffffff"
+        android:textSize="18sp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16sp"
+        android:layout_marginEnd="16sp"/>
+    <Button
+        android:id="@+id/sign_up_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12sp"
+        android:background="#f4942e"
+        android:textColor="#ffffff"
+        android:textSize="18sp"
+        android:text="Sign up"
+        android:layout_marginStart="16sp"
+        android:layout_marginEnd="16sp"/>
+
+</LinearLayout>
