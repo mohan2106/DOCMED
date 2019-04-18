@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:background="@drawable/background_gradient"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:layout_height="match_parent"
+    tools:context=".verifyOTP">
+
+    <TextView
+        android:id="@+id/otp_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="We send a verification code on +919876543210"
+        android:textSize="28sp"
+        android:textColor="#ffffff"
+        android:layout_marginStart="16sp"
+        android:layout_marginEnd="16sp"
+        />
+    <EditText
+        android:id="@+id/otp"
+        android:layout_width="match_parent"
+        android:layout_height="50sp"
+        android:padding="10dp"
+        android:layout_marginTop="8dp"
+        android:hint="Enter otp"
+        android:background="@drawable/edit_text_back_gradient"
+        android:layout_marginStart="16sp"
+        android:layout_marginEnd="16sp"
+        android:inputType="text"/>
+    <Button
+        android:id="@+id/otp_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="16sp"
+        android:layout_marginEnd="16sp"
+        android:text="Verify"
+        android:textSize="18dp"
+        android:textColor="#ffffff"
+        android:background="#e25108"/>
+
+</LinearLayout>

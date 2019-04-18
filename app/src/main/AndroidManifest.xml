@@ -42,7 +42,10 @@
         <activity android:name=".Doctor_profile" />
         <activity android:name=".searchActivity" />
         <activity android:name=".order_medicine_activity" />
-        <activity android:name=".chooseMedicine"></activity>
+        <activity android:name=".chooseMedicine" />
+        <activity android:name=".LoginNewActivity" />
+        <activity android:name=".Signup_new_Activity" />
+        <activity android:name=".verifyOTP"></activity>
     </application>
 
 </manifest>
