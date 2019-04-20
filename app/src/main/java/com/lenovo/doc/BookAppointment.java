@@ -15,6 +15,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,12 +33,18 @@ import java.util.List;
 public class BookAppointment extends AppCompatActivity {
     private RecyclerView recyclerView;
     private List<doctor_details_class> itemList;
+    private ArrayList<String> cityList;
+    private LinearLayout locality;
     private doctor_adapter adapter;
-    private TextView city_view;
+    private String City;
+    private String local;
+    private TextView city_view,loc_text;
+    private String flag;
     private EditText search_et;
+    private ArrayList<String> localityList;
     private LatLng loc=null;
     private ProgressDialog bar;
-    private Button sel_city;
+    private Button sel_city,category;
     private FirebaseFirestore firebaseFirestore;
 
     @Override
@@ -47,14 +54,27 @@ public class BookAppointment extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         sel_city=(Button)findViewById(R.id.select_city);
         search_et=(EditText)findViewById(R.id.search_et);
+        loc_text=(TextView)findViewById(R.id.locality_text);
         city_view=(TextView)findViewById(R.id.city_view);
         bar=new ProgressDialog(this);
+        locality=(LinearLayout)findViewById(R.id.locality);
+        category=(Button)findViewById(R.id.category);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         toolbar.setTitle("Doctors");
         Intent i=getIntent();
-        String city=i.getStringExtra("City_name");
+        final String tv=i.getStringExtra("City_name");
+        flag=i.getStringExtra("flag");
+        String s2=i.getStringExtra("local");
+        if(Integer.valueOf(flag)==0){
+            City=tv;
+            local="Choose Locality";
+        }
+        else{
+            local=tv;
+            City=s2;
+        }
         search_et.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -71,14 +91,84 @@ public class BookAppointment extends AppCompatActivity {
                 filter(s.toString());
             }
         });
-        city_view.setText(city);
+        category.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(BookAppointment.this,CategoryActivity.class);
+            }
+        });
+        city_view.setText(City);
+        loc_text.setText(local);
+
+        cityList = new ArrayList<>();
+        cityList.add("Jaipur");
+        cityList.add("Patna");
+        cityList.add("lucknow");
+        cityList.add("Delhi");
+        cityList.add("Mumbai");
+        cityList.add("Bombay");
+        cityList.add("Kota");
+        cityList.add("Udaipur");
+        cityList.add("Amritsar");
+        cityList.add("Pune");
+        cityList.add("Chennai");
+        cityList.add("Hyderabad");
+        cityList.add("Bengaluru");
+        cityList.add("Kolkata");
+        cityList.add("Guwahati");
+        cityList.add("Dispur");
+        cityList.add("Ahmedabad");
+        cityList.add("Shilong");
+        localityList=new ArrayList<>();
+        localityList.add("Alaknanda");
+        localityList.add("chittaranjan park");
+        localityList.add("Defence Colony");
+        localityList.add("Dwarka");
+        localityList.add("East Of Kailash");
+        localityList.add("Green Park");
+        localityList.add("Hauz Khas");
+        localityList.add("Janakpuri");
+        localityList.add("Delhi ncr");
+        localityList.add("Jasola Vihar");
+        localityList.add("Malviya Nagar");
+        localityList.add("Paschim Vihar");
+        localityList.add("Pitam Pura");
+        localityList.add("Uttam Nagar");
+        localityList.add("Vasant Kunj");
+        localityList.add("Vasant vihar");
+        localityList.add("Vikaspuri");
+        localityList.add("Red Fort");
+        localityList.add("Jama Masjid");
+        localityList.add("India gate");
+        localityList.add("seceratariate");
+        localityList.add("Sarita Vihar");
+
         sel_city.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(BookAppointment.this,searchActivity.class));
+                Intent intent=new Intent(BookAppointment.this,searchActivity.class);
+                intent.putExtra("text","Search City");
+                intent.putExtra("local",local);
+                intent.putExtra("cityName",City);
+                intent.putExtra("city",cityList);
+                intent.putExtra("flag","0");
+                startActivity(intent);
+                //startActivity(new Intent(BookAppointment.this,searchActivity.class));
             }
         });
-        bar.setMessage("Loding doctors in "+city+" ...");
+        locality.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(BookAppointment.this,searchActivity.class);
+                intent.putExtra("text","Search Locality in "+City);
+                intent.putExtra("local",local);
+                intent.putExtra("cityName",City);
+                intent.putExtra("city",localityList);
+                intent.putExtra("flag","1");
+                startActivity(intent);
+            }
+        });
+        bar.setMessage("Loding doctors in "+City+"...");
         bar.show();
         firebaseFirestore=FirebaseFirestore.getInstance();
         recyclerView=(RecyclerView)findViewById(R.id.dr_list_recycler_view);

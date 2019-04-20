@@ -24,31 +24,31 @@
     <ScrollView
         android:id="@+id/scrollView2"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_below="@id/layout"
-        android:layout_marginBottom="0dp"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/profile_layout"
+        app:layout_constraintEnd_toEndOf="@+id/profile_layout"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/layout">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
             <include
                 layout="@layout/dr_profile_view"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
+
+            <include
+                android:id="@+id/date_picker"
+                layout="@layout/date_and_time_picker" />
         </LinearLayout>
     </ScrollView>
 
-    <include
-        android:id="@+id/date_picker"
-        layout="@layout/date_and_time_picker"
-        android:layout_marginBottom="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/profile_layout"
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent" />
+
 
 
     <LinearLayout

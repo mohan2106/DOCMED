@@ -23,7 +23,10 @@ public class searchActivity extends AppCompatActivity {
     private EditText editText;
     private ImageView search_btn;
     private ImageView img;
-    private TextView tv1,tv2;
+    private TextView tv1,tv2,title;
+    private String search_head,flag,local,city;
+    private int n;
+    private ArrayList<String> listn;
     private ArrayList<city_name> itemList;
     private RecyclerView mRecyclerView;
     private cityListAdapter adapter;
@@ -34,8 +37,17 @@ public class searchActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
+        Intent intent1=getIntent();
+        search_head=intent1.getStringExtra("text");
+        listn=intent1.getStringArrayListExtra("city");
+        flag=intent1.getStringExtra("flag");
+        local=intent1.getStringExtra("local");
+        city=intent1.getStringExtra("cityName");
+        n=listn.size();
         img=(ImageView)findViewById(R.id.imageView7);
         tv1=(TextView)findViewById(R.id.textView3);
+        title=(TextView)findViewById(R.id.search_title);
+        title.setText(search_head);
         tv2=(TextView)findViewById(R.id.textView9);
         editText=(EditText)findViewById(R.id.search_text);
         search_btn=(ImageView)findViewById(R.id.search_icon);
@@ -84,30 +96,15 @@ public class searchActivity extends AppCompatActivity {
         mRecyclerView = findViewById(R.id.recycler_view);
         mRecyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(this);
-        adapter = new cityListAdapter(this,itemList);
+        adapter = new cityListAdapter(this,itemList,flag,local,city);
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setAdapter(adapter);
     }
     private void createExampleList(){
         itemList = new ArrayList<>();
-        itemList.add(new city_name("Jaipur"));
-        itemList.add(new city_name("Patna"));
-        itemList.add(new city_name("lucknow"));
-        itemList.add(new city_name("Delhi"));
-        itemList.add(new city_name("Mumbai"));
-        itemList.add(new city_name("Bombay"));
-        itemList.add(new city_name("Kota"));
-        itemList.add(new city_name("Udaipur"));
-        itemList.add(new city_name("Amritsar"));
-        itemList.add(new city_name("Pune"));
-        itemList.add(new city_name("Chennai"));
-        itemList.add(new city_name("Hyderabad"));
-        itemList.add(new city_name("Bengaluru"));
-        itemList.add(new city_name("Kolkata"));
-        itemList.add(new city_name("Guwahati"));
-        itemList.add(new city_name("Dispur"));
-        itemList.add(new city_name("Ahmedabad"));
-        itemList.add(new city_name("Shilong"));
+        for(int i=0;i<n;i++){
+            itemList.add(new city_name(listn.get(i)));
+        }
 
 
     }

@@ -12,10 +12,15 @@ import java.util.ArrayList;
 public class cityListAdapter extends RecyclerView.Adapter<cityListAdapter.ViewHolder> {
     private Context context;
     private ArrayList<city_name> cityArray;
+    private String flag;
+    private String local,city;
 
-    public cityListAdapter(Context context, ArrayList<city_name> cityList) {
+    public cityListAdapter(Context context, ArrayList<city_name> cityList,String flag,String local,String City) {
         this.context = context;
         this.cityArray=cityList;
+        this.flag=flag;
+        this.local=local;
+        this.city=City;
     }
 
     @NonNull
@@ -35,6 +40,13 @@ public class cityListAdapter extends RecyclerView.Adapter<cityListAdapter.ViewHo
             public void onClick(View v) {
                 Intent intent =new Intent(context,BookAppointment.class);
                 intent.putExtra("City_name",name);
+                intent.putExtra("flag",flag);
+                if(Integer.valueOf(flag)==0){
+                    intent.putExtra("local",local);
+                }
+                else{
+                    intent.putExtra("local",city);
+                }
                 context.startActivity(intent);
             }
         });

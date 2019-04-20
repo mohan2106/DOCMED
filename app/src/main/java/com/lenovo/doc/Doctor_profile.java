@@ -37,7 +37,7 @@ public class Doctor_profile extends AppCompatActivity {
     private LinearLayout call_for_detail;
     private DatePickerDialog dbg;
     private TextView date_view;
-    private List<time_model> itemList;
+    //private List<time_model> itemList;
     private CircleImageView img;
 
     @Override
@@ -102,7 +102,7 @@ public class Doctor_profile extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        recyclerView=(RecyclerView)findViewById(R.id.horizontal_recycler);
+        /*recyclerView=(RecyclerView)findViewById(R.id.horizontal_recycler);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, true));
         //recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -121,7 +121,7 @@ public class Doctor_profile extends AppCompatActivity {
         itemList.add(new time_model("10:00-10:30","7"));
         itemList.add(new time_model("9:30-10:00","5"));
         itemList.add(new time_model("9:00-9:30","8"));
-        recyclerView.setAdapter(adapter);
+        recyclerView.setAdapter(adapter);*/
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
