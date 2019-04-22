@@ -47,7 +47,9 @@
         <activity android:name=".LoginNewActivity" />
         <activity android:name=".Signup_new_Activity" />
         <activity android:name=".verifyOTP" />
-        <activity android:name=".CategoryActivity"></activity>
+        <activity android:name=".CategoryActivity" />
+        <activity android:name=".paymentActivity" />
+        <activity android:name=".yourBooking"></activity>
     </application>
 
 </manifest>

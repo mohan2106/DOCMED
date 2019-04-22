@@ -67,6 +67,7 @@ public class BookAppointment extends AppCompatActivity {
         final String tv=i.getStringExtra("City_name");
         flag=i.getStringExtra("flag");
         String s2=i.getStringExtra("local");
+        String categ=i.getStringExtra("category");
         if(Integer.valueOf(flag)==0){
             City=tv;
             local="Choose Locality";
@@ -75,6 +76,7 @@ public class BookAppointment extends AppCompatActivity {
             local=tv;
             City=s2;
         }
+        category.setText(categ);
         search_et.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -95,6 +97,9 @@ public class BookAppointment extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent=new Intent(BookAppointment.this,CategoryActivity.class);
+                intent.putExtra("city",City);
+                intent.putExtra("local",local);
+                startActivity(intent);
             }
         });
         city_view.setText(City);

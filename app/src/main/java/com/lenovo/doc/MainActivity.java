@@ -37,13 +37,13 @@ public class MainActivity extends AppCompatActivity {
         btn1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this,LoginNewActivity.class));
+                startActivity(new Intent(MainActivity.this,LoginActivity.class));
             }
         });
         btn2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this,Signup_new_Activity.class));
+                startActivity(new Intent(MainActivity.this,SignUpActivity.class));
             }
         });
     }

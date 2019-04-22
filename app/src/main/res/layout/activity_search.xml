@@ -30,7 +30,7 @@
         android:ems="10"
         android:background="@drawable/button_shape"
         android:inputType="textPersonName"
-        android:hint="Search City here..."
+        android:hint="Search here..."
         app:layout_constraintEnd_toStartOf="@+id/search_icon"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/search_title" />

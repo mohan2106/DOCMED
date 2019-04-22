@@ -40,6 +40,7 @@ public class HomeFragment extends Fragment {
                 intent.putExtra("City_name","Guwahati");
                 intent.putExtra("local","Locality");
                 intent.putExtra("flag","0");
+                intent.putExtra("category","Category");
                 startActivity(intent);
             }
         });

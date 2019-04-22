@@ -41,6 +41,7 @@ public class cityListAdapter extends RecyclerView.Adapter<cityListAdapter.ViewHo
                 Intent intent =new Intent(context,BookAppointment.class);
                 intent.putExtra("City_name",name);
                 intent.putExtra("flag",flag);
+                intent.putExtra("category","Category");
                 if(Integer.valueOf(flag)==0){
                     intent.putExtra("local",local);
                 }

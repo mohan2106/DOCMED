@@ -81,13 +81,13 @@
         </LinearLayout>
 
         <Button
-            android:id="@+id/book_now_service"
+            android:id="@+id/continue_btn"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="@color/colorAccent"
             android:stateListAnimator="@null"
-            android:text="Confirm"
+            android:text="Continue"
             android:textColor="#ffffff"
             android:textSize="16sp"
             android:textStyle="bold" />
