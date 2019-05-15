@@ -13,7 +13,7 @@ public class MainActivity extends AppCompatActivity {
 
     private Button btn1,btn2;
     private FirebaseAuth mAuth;
-    private final int SPLASH_LENGTH=3000;
+    //private final int SPLASH_LENGTH=3000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -38,6 +38,9 @@ public class HomeFragment extends Fragment {
             public void onClick(View v) {
                 Intent intent=new Intent(getContext(),BookAppointment.class);
                 intent.putExtra("City_name","Guwahati");
+                intent.putExtra("local","Locality");
+                intent.putExtra("flag","0");
+                intent.putExtra("category","Category");
                 startActivity(intent);
             }
         });

@@ -3,6 +3,7 @@
     package="com.lenovo.doc">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.SEND_SMS" />
 
     <application
         android:allowBackup="true"
@@ -45,7 +46,10 @@
         <activity android:name=".chooseMedicine" />
         <activity android:name=".LoginNewActivity" />
         <activity android:name=".Signup_new_Activity" />
-        <activity android:name=".verifyOTP"></activity>
+        <activity android:name=".verifyOTP" />
+        <activity android:name=".CategoryActivity" />
+        <activity android:name=".paymentActivity" />
+        <activity android:name=".yourBooking"></activity>
     </application>
 
 </manifest>

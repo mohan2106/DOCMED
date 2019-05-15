@@ -2,6 +2,7 @@ package com.lenovo.doc;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.ColorSpace;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -12,6 +13,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.model.Model;
+import com.google.firebase.firestore.GeoPoint;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,6 +44,9 @@ public class doctor_adapter extends RecyclerView.Adapter<doctor_adapter.ViewHold
         final String experience=ne.getExperiencce();
         final String Speciality=ne.getSpeciality();
         final String image=ne.getImage();
+        final GeoPoint loc=ne.getLocation();
+        //final com.lenovo.doc.Model model=new com.lenovo.doc.Model();
+        //model.setGeoPoint(ne.getLocation());
         viewHolder.name.setText(ne.getName());
         viewHolder.address.setText(ne.getAddress());
         viewHolder.fee.setText("Fee: Rs."+ne.getFee());
@@ -59,6 +65,7 @@ public class doctor_adapter extends RecyclerView.Adapter<doctor_adapter.ViewHold
                 intent.putExtra("experience",experience);
                 intent.putExtra("speciality",Speciality);
                 intent.putExtra("image",image);
+                //intent.putExtra("location",model);
                 context.startActivity(intent);
             }
         });

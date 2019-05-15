@@ -141,6 +141,9 @@ public class WelcomeActivity extends AppCompatActivity
             case R.id.nav_address:
                 startActivity(new Intent(WelcomeActivity.this,AddAddressActivity.class));
                 break;
+            case R.id.nav_appointment:
+                startActivity(new Intent(WelcomeActivity.this,yourBooking.class));
+                break;
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
