@@ -66,7 +66,18 @@ public class paymentActivity extends AppCompatActivity {
         time = i.getStringExtra("time");
         final String lat=i.getStringExtra("lat");
         final String lng=i.getStringExtra("long");
+        final String id=i.getStringExtra("id");
         //final GeoPoint loc=i.getParcelableExtra("location");
+        String[] parts=time.split(":");
+        int initial=Integer.parseInt(parts[0]);
+        int TID=0;
+        if(initial<=8){
+            initial+=12;
+        }
+        initial = initial*100;
+        String[] parts2=parts[1].split("-");
+        initial += Integer.parseInt(parts2[0]);
+        final int data=initial;
         dialog = new ProgressDialog(this);
         pay_at_counter=(LinearLayout)findViewById(R.id.pay_at_counter);
         pay_online=(ImageView)findViewById(R.id.pay_online);
@@ -147,6 +158,7 @@ public class paymentActivity extends AppCompatActivity {
                                 Drdata.put("BookingId", DocName);
                                 Drdata.put("lat",lat);
                                 Drdata.put("long",lng);
+                                Drdata.put("id",id);
                                 //Drdata.put("latitude",String.valueOf(loc.getLatitude()));
                                 //Drdata.put("longitude",String.valueOf(loc.getLongitude()));
                                 firestore.collection("USERS").document(mAuth.getUid()).collection("Appointment").document(DocName).set(Drdata).addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -170,6 +182,35 @@ public class paymentActivity extends AppCompatActivity {
                         }
                     }
                 });
+                Map<String,Object> data_dr=new HashMap<>();
+                data_dr.put("TID",data);
+                data_dr.put("priority",2);
+                //Map<Object,String> strData=new HashMap<>();
+                data_dr.put("description",pat_name.getText().toString());
+                data_dr.put("time",time);
+                Toast.makeText(paymentActivity.this, String.valueOf(data), Toast.LENGTH_SHORT).show();
+                firestore.collection("Doctors").document("India").collection("Guwahati").document(id).collection(day+"-"+month+"-"+year).document(mAuth.getUid()).set(data_dr).addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(paymentActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+                /*firestore.collection("Doctors").document("India").collection("Guwahati").document(id).collection(day+"-"+month+"-"+year).document(mAuth.getUid()).set(strData).addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(paymentActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });*/
 
             }
         });

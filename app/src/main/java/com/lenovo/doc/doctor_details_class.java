@@ -9,10 +9,11 @@ public class doctor_details_class {
     private String fee;
     private String image;
     private String experiencce;
+    private String id;
     private String speciality;
     private GeoPoint location;
 
-    public doctor_details_class(String name, String address, String fee, String image, String experiencce, String speciality, GeoPoint location) {
+    public doctor_details_class(String name, String address, String fee, String image, String experiencce, String speciality, GeoPoint location,String id) {
         this.name = name;
         this.address = address;
         this.fee = fee;
@@ -20,6 +21,7 @@ public class doctor_details_class {
         this.experiencce = experiencce;
         this.speciality = speciality;
         this.location = location;
+        this.id=id;
     }
 
     public String getName() {
@@ -76,5 +78,13 @@ public class doctor_details_class {
 
     public void setLocation(GeoPoint location) {
         this.location = location;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 }

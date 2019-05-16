@@ -129,6 +129,7 @@ public class Doctor_profile extends AppCompatActivity {
         final String image=i.getStringExtra("image");
         final String lat=i.getStringExtra("lat");
         final String lng=i.getStringExtra("long");
+        final String id=i.getStringExtra("id");
         //final GeoPoint loc=i.getParcelableExtra("location");
         Glide.with(this)
                 .load(image)
@@ -214,6 +215,7 @@ public class Doctor_profile extends AppCompatActivity {
                     intent.putExtra("count",no[0]);
                     intent.putExtra("long",lng);
                     intent.putExtra("time",btnList.get(x).getText());
+                    intent.putExtra("id",id);
                     //intent.putExtra("location",model);
                     startActivity(intent);
                 }

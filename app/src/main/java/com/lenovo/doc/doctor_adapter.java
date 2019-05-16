@@ -46,6 +46,7 @@ public class doctor_adapter extends RecyclerView.Adapter<doctor_adapter.ViewHold
         final String Speciality=ne.getSpeciality();
         final String image=ne.getImage();
         final GeoPoint loc=ne.getLocation();
+        final String id=ne.getId();
         //final com.lenovo.doc.Model model=new com.lenovo.doc.Model();
         //model.setGeoPoint(ne.getLocation());
         viewHolder.name.setText(ne.getName());
@@ -68,6 +69,7 @@ public class doctor_adapter extends RecyclerView.Adapter<doctor_adapter.ViewHold
                 intent.putExtra("image",image);
                 intent.putExtra("lat",String.valueOf(loc.getLatitude()));
                 intent.putExtra("long",String.valueOf(loc.getLongitude()));
+                intent.putExtra("id",id);
                 //intent.putExtra("location",model);
                 context.startActivity(intent);
             }
