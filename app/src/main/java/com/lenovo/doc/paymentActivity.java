@@ -165,7 +165,7 @@ public class paymentActivity extends AppCompatActivity {
                                     @Override
                                     public void onSuccess(Void aVoid) {
                                         Toast.makeText(paymentActivity.this, "Request Received", Toast.LENGTH_SHORT).show();
-                                        startActivity(new Intent(paymentActivity.this,WelcomeActivity.class));
+                                        startActivity(new Intent(paymentActivity.this,thankingActivity.class));
                                         finish();
                                         dialog.dismiss();
                                     }
