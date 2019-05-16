@@ -129,17 +129,20 @@ public class WelcomeActivity extends AppCompatActivity
         int id = item.getItemId();
 
         switch (item.getItemId()){
-            case R.id.nav_logout:
+            /*case R.id.nav_logout:
                 firebaseAuth.signOut();
                 finish();
                 final Intent intent = new Intent(WelcomeActivity.this , MainActivity.class);
                 startActivity(intent);
-                break;
+                break;*/
             case R.id.nav_profile:
                 startActivity(new Intent(WelcomeActivity.this,profileActivity.class));
                 break;
             case R.id.nav_address:
                 startActivity(new Intent(WelcomeActivity.this,AddAddressActivity.class));
+                break;
+            case R.id.nav_appointment:
+                startActivity(new Intent(WelcomeActivity.this,yourBooking.class));
                 break;
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

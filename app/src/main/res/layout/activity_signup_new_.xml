@@ -20,110 +20,125 @@
         android:layout_marginEnd="16sp"
         android:textSize="22sp"/>
 
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/textInputLayout1"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView">
+        >
 
-        <EditText
-            android:id="@+id/signin_contact_new"
+
+        <android.support.v4.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:drawableRight="@drawable/ic_action_profile_image"
-            android:hint="Phone no."
-            android:inputType="phone"
-            android:textColor="#ffffff"
-            android:drawableTint="#ffffff"
-            android:backgroundTint="#ffffff"
-            android:outlineAmbientShadowColor="#ffffff"
-            android:textColorHint="#ffffff"
-            android:fontFamily="@string/common_google_play_services_enable_button"
-            android:outlineProvider="background"
-            android:padding="10dp" />
+            android:layout_height="match_parent">
 
-    </android.support.design.widget.TextInputLayout>
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/textInputLayout2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
 
-        <EditText
-            android:id="@+id/signin_password_new"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:drawableRight="@drawable/ic_lock"
-            android:hint="Password"
-            android:inputType="text"
-            android:textColor="#ffffff"
-            android:drawableTint="#ffffff"
-            android:visibility="gone"
-            android:backgroundTint="#ffffff"
-            android:outlineAmbientShadowColor="#ffffff"
-            android:textColorHint="#ffffff"
-            android:fontFamily="@string/common_google_play_services_enable_button"
-            android:outlineProvider="background"
-            android:padding="10dp" />
-
-    </android.support.design.widget.TextInputLayout>
+                android:orientation="vertical"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:paddingBottom="30dp"
+                android:layout_marginTop="10dp">
 
 
-    <Button
-        android:id="@+id/login_btn_new"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16sp"
-        android:layout_marginEnd="16sp"
-        android:text="Get Startted"
-        android:textColor="#ffffff"
-        android:layout_marginTop="12dp"
-        android:background="#e25108"/>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="16dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:id="@+id/phoneLayout"
+                    android:background="@drawable/edxlogin"
+                    android:padding="2dp">
 
-    <TextView
-        android:id="@+id/otp_text"
-        android:visibility="gone"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="We send a verification code on +919876543210"
-        android:textSize="28sp"
-        android:textColor="#ffffff"
-        android:layout_marginStart="16sp"
-        android:layout_marginEnd="16sp"
-        />
-    <EditText
-        android:id="@+id/otp"
-        android:layout_width="match_parent"
-        android:layout_height="50sp"
-        android:padding="10dp"
-        android:visibility="gone"
-        android:layout_marginTop="8dp"
-        android:hint="Enter otp"
-        android:background="@drawable/edit_text_back_gradient"
-        android:layout_marginStart="16sp"
-        android:layout_marginEnd="16sp"
-        android:inputType="text"/>
-    <Button
-        android:id="@+id/otp_btn"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_marginStart="16sp"
-        android:visibility="gone"
-        android:layout_marginEnd="16sp"
-        android:text="Verify"
-        android:textSize="18dp"
-        android:textColor="#ffffff"
-        android:background="#e25108"/>
+                    <EditText
+                        android:id="@+id/text_countrycode"
+                        android:layout_width="60dp"
+                        android:layout_height="40dp"
+                        android:background="@drawable/emptybtn"
+                        android:focusable="false"
+
+                        android:focusableInTouchMode="false"
+                        android:hint="Code"
+                        android:paddingLeft="8dp"
+                        android:text="+263"
+
+                        />
+
+                    <EditText
+                        android:id="@+id/phoneText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="40dp"
+                        android:ems="10"
+                        android:background="@drawable/emptybtn"
+                        android:hint="Phone number"
+                        android:inputType="phone"/>
+
+                </LinearLayout>
+
+                <Button
+                    android:layout_marginTop="20dp"
+                    android:layout_gravity="center"
+                    android:id="@+id/sendButton"
+                    android:layout_width="170dp"
+                    android:layout_height="40dp"
+                    android:background="@drawable/logbtn"
+                    android:text="Send Code"
+                    android:textColor="#fff"
+                    />
+
+                <TextView
+                    android:id="@+id/resendButton"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="10dp"
+                    android:onClick="resendCode"
+                    android:visibility="gone"
+                    android:text="Resend Code"
+
+                    android:textColor="@color/colorPrimaryDark"
+
+                    android:textSize="14sp" />
+
+                <EditText
+                    android:paddingLeft="8dp"
+                    android:layout_marginTop="10dp"
+                    android:id="@+id/codeText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:ems="10"
+                    android:visibility="gone"
+                    android:hint="Code"
+                    android:background="@drawable/edxlogin"
+                    android:inputType="number"
+                    android:layout_gravity="center"
+                    />
+
+
+                <Button
+                    android:layout_marginTop="20dp"
+                    android:id="@+id/verifyButton"
+                    android:layout_width="170dp"
+                    android:layout_height="40dp"
+                    android:text="Verify Code"
+                    android:onClick="verifyCode"
+                    android:visibility="gone"
+                    android:layout_gravity="center"
+                    android:background="@drawable/logbtn"
+                    android:textColor="#fff"/>
+
+
+
+
+
+
+            </LinearLayout>
+
+        </android.support.v4.widget.NestedScrollView>
+
+
+    </LinearLayout>
+
 </LinearLayout>
 

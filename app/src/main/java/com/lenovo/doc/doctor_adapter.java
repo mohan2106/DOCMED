@@ -2,6 +2,8 @@ package com.lenovo.doc;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.ColorSpace;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -12,6 +14,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.model.Model;
+import com.google.firebase.firestore.GeoPoint;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,6 +45,9 @@ public class doctor_adapter extends RecyclerView.Adapter<doctor_adapter.ViewHold
         final String experience=ne.getExperiencce();
         final String Speciality=ne.getSpeciality();
         final String image=ne.getImage();
+        final GeoPoint loc=ne.getLocation();
+        //final com.lenovo.doc.Model model=new com.lenovo.doc.Model();
+        //model.setGeoPoint(ne.getLocation());
         viewHolder.name.setText(ne.getName());
         viewHolder.address.setText(ne.getAddress());
         viewHolder.fee.setText("Fee: Rs."+ne.getFee());
@@ -59,6 +66,20 @@ public class doctor_adapter extends RecyclerView.Adapter<doctor_adapter.ViewHold
                 intent.putExtra("experience",experience);
                 intent.putExtra("speciality",Speciality);
                 intent.putExtra("image",image);
+                intent.putExtra("lat",String.valueOf(loc.getLatitude()));
+                intent.putExtra("long",String.valueOf(loc.getLongitude()));
+                //intent.putExtra("location",model);
+                context.startActivity(intent);
+            }
+        });
+        final String nm=ne.getName();
+        viewHolder.location.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=null,chooser=null;
+                intent=new Intent(Intent.ACTION_VIEW);
+                intent.setData(Uri.parse("geo:"+loc.getLatitude()+","+loc.getLongitude()+"?q="+loc.getLatitude()+","+loc.getLongitude()+"("+nm+")&iwloc=A&hl=es"));
+                chooser=Intent.createChooser(intent,"Launch Maps");
                 context.startActivity(intent);
             }
         });

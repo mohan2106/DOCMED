@@ -15,6 +15,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -130,24 +132,19 @@ public class SignUpActivity extends AppCompatActivity {
                             userdata.put("UserName",username);
                             userdata.put("UserPhone",userPhone);
 
-                            firebaseFirestore.collection("USERS")
-                                    .add(userdata)
-                                    .addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
-                                        @Override
-                                        public void onComplete(@NonNull Task<DocumentReference> task) {
-                                            if(task.isSuccessful()){
-                                                Toast.makeText(SignUpActivity.this, "Refisytered Successfully", Toast.LENGTH_SHORT).show();
-                                                // Sign in success, update UI with the signed-in user's information
-                                                Intent intent=new Intent(SignUpActivity.this,WelcomeActivity.class);
-                                                finish();
-                                                startActivity(intent);
-                                            }
-                                            else{
-                                                String error=task.getException().getMessage();
-                                                Toast.makeText(SignUpActivity.this, error, Toast.LENGTH_SHORT).show();
-                                            }
-                                        }
-                                    });
+                            firebaseFirestore.collection("USERS").document(uid).set(userdata).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
+                                    Toast.makeText(SignUpActivity.this, "Registration Successfull", Toast.LENGTH_SHORT).show();
+                                    startActivity(new Intent(SignUpActivity.this,WelcomeActivity.class));
+                                    finish();
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Toast.makeText(SignUpActivity.this, e.getMessage().toString(), Toast.LENGTH_SHORT).show();
+                                }
+                            });
 
 
                         } else {

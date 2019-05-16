@@ -14,11 +14,18 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.GeoPoint;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -33,12 +40,21 @@ public class Doctor_profile extends AppCompatActivity {
     private Button date;
     private TextView pr_name,special,addr,exper,fee;
     private Calendar c;
+    private ArrayList<Button> btnList;
     private int pos=100;
     private LinearLayout call_for_detail;
+    private TextView time_show;
+    private int x=100;
     private DatePickerDialog dbg;
+    private ImageView mapImg;
+    private Button cont_btn;
+    private String d,m,y;
+    private int flag=99;
     private TextView date_view;
-    private List<time_model> itemList;
+    //private List<time_model> itemList;
     private CircleImageView img;
+    private FirebaseFirestore firestore=FirebaseFirestore.getInstance();
+    private FirebaseAuth mAuth = FirebaseAuth.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,13 +66,70 @@ public class Doctor_profile extends AppCompatActivity {
         addr=(TextView)findViewById(R.id.profile_address);
         exper=(TextView)findViewById(R.id.profile_experience);
         img=(CircleImageView)findViewById(R.id.circleImageView);
+        mapImg=(ImageView)findViewById(R.id.profile_map);
+        time_show=(TextView)findViewById(R.id.time_show);
+        cont_btn=(Button)findViewById(R.id.continue_btn);
+        btnList=new ArrayList<>();
+        btnList.add((Button)findViewById(R.id.button));
+        btnList.add((Button)findViewById(R.id.button2));
+        btnList.add((Button)findViewById(R.id.button3));
+        btnList.add((Button)findViewById(R.id.button4));
+        btnList.add((Button)findViewById(R.id.button5));
+        btnList.add((Button)findViewById(R.id.button6));
+        btnList.add((Button)findViewById(R.id.button7));
+        btnList.add((Button)findViewById(R.id.button8));
+        btnList.add((Button)findViewById(R.id.button9));
+        btnList.add((Button)findViewById(R.id.button10));
+        btnList.add((Button)findViewById(R.id.button11));
+        btnList.add((Button)findViewById(R.id.button12));
+        btnList.add((Button)findViewById(R.id.button13));
+        btnList.add((Button)findViewById(R.id.button14));
+        btnList.add((Button)findViewById(R.id.button15));
+        btnList.add((Button)findViewById(R.id.button16));
+        btnList.add((Button)findViewById(R.id.button17));
+        btnList.add((Button)findViewById(R.id.button18));
+        btnList.add((Button)findViewById(R.id.button19));
+        btnList.add((Button)findViewById(R.id.button20));
+        btnList.add((Button)findViewById(R.id.button21));
+        btnList.add((Button)findViewById(R.id.button22));
+        btnList.add((Button)findViewById(R.id.button23));
+        btnList.add((Button)findViewById(R.id.button24));
+        for(int i=0;i<24;i++){
+            //x=i;
+            final int temp=i;
+            btnList.get(i).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    x=temp;
+                    if(x==flag){
+                        v.setBackgroundResource(R.drawable.gradient_color_background);
+                        time_show.setText("Time Not Choosen");
+                        flag=99;
+                        x=98;
+                    }
+                    else{
+                        v.setBackgroundResource(R.drawable.gradient_green);
+                        time_show.setText(btnList.get(x).getText());
+                        if(flag<24){
+                            btnList.get(flag).setBackgroundResource(R.drawable.gradient_color_background);
+                        }
+                        flag=x;
+                    }
+                    //Toast.makeText(Doctor_profile.this, String.valueOf(x), Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
+
         Intent i=getIntent();
-        String name=i.getStringExtra("name");
-        String fee=i.getStringExtra("fee");
+        final String name=i.getStringExtra("name");
+        final String fee=i.getStringExtra("fee");
         String experience=i.getStringExtra("experience");
-        String address=i.getStringExtra("address");
-        String speciality=i.getStringExtra("speciality");
-        String image=i.getStringExtra("image");
+        final String address=i.getStringExtra("address");
+        final String speciality=i.getStringExtra("speciality");
+        final String image=i.getStringExtra("image");
+        final String lat=i.getStringExtra("lat");
+        final String lng=i.getStringExtra("long");
+        //final GeoPoint loc=i.getParcelableExtra("location");
         Glide.with(this)
                 .load(image)
                 .into(img);
@@ -84,11 +157,69 @@ public class Doctor_profile extends AppCompatActivity {
                         date_view.setText(dayOfMonth+"/"+(month+1)+"/"+year);
                         date_view.setTextColor(Color.parseColor("#339f33"));
                         date.setText("Change Date");
+                        d=String.valueOf(dayOfMonth);
+                        m=String.valueOf(month+1);
+                        y=String.valueOf(year);
                     }
                 },day,month,year);
                 DatePicker dp = dbg.getDatePicker();
                 dp.setMinDate(c.getTimeInMillis());
                 dbg.show();
+
+            }
+        });
+        final String[] no=new String[1];
+        firestore.collection("BookingCount").document("India").get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                if(documentSnapshot.exists()){
+                    //on.setText(documentSnapshot.getString("count"));
+                    //Toast.makeText(paymentActivity.this, on.getText().toString(), Toast.LENGTH_SHORT).show();
+                    no[0]=documentSnapshot.getString("count");
+                    //DocName[0] =String.valueOf(Integer.parseInt(documentSnapshot.getString("count"))+1);
+                }
+                else{
+                    //Toast.makeText(paymentActivity.this, "document not exist", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        //Toast.makeText(this, lat+"  "+lng, Toast.LENGTH_SHORT).show();
+        mapImg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=null,chooser=null;
+                intent=new Intent(Intent.ACTION_VIEW);
+                intent.setData(Uri.parse("geo:"+lat+","+lng+"?q="+lat+","+lng+"("+name+")&iwloc=A&hl=es"));
+                chooser=Intent.createChooser(intent,"Launch Maps");
+                startActivity(intent);
+            }
+        });
+        //final com.lenovo.doc.Model model=new com.lenovo.doc.Model();
+        //model.setGeoPoint(loc);
+        cont_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(x<24 && d!=null){
+                    Intent intent=new Intent(Doctor_profile.this,paymentActivity.class);
+                    intent.putExtra("name",name);
+                    intent.putExtra("fee",fee);
+                    intent.putExtra("address",address);
+                    intent.putExtra("image",image);
+                    intent.putExtra("speciality",speciality);
+                    intent.putExtra("day",d);
+                    intent.putExtra("month",m);
+                    intent.putExtra("year",y);
+                    intent.putExtra("lat",lat);
+                    intent.putExtra("count",no[0]);
+                    intent.putExtra("long",lng);
+                    intent.putExtra("time",btnList.get(x).getText());
+                    //intent.putExtra("location",model);
+                    startActivity(intent);
+                }
+                else{
+                    Toast.makeText(Doctor_profile.this, "Date and Time must required", Toast.LENGTH_SHORT).show();
+                }
 
             }
         });
@@ -102,26 +233,6 @@ public class Doctor_profile extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        recyclerView=(RecyclerView)findViewById(R.id.horizontal_recycler);
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, true));
-        //recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        itemList=new ArrayList<>();
-        adapter=new time_adapter(itemList,this,pos);
-        itemList.add(new time_model("4:30-5:00","15"));
-        itemList.add(new time_model("4:00-4:30","13"));
-        itemList.add(new time_model("3:30-4:00","12"));
-        itemList.add(new time_model("3:00-3:30","15"));
-        itemList.add(new time_model("2:30-3:00","11"));
-        itemList.add(new time_model("2:00-2:30","7"));
-        itemList.add(new time_model("12:30-01:00","2"));
-        itemList.add(new time_model("11:30-12:00","5"));
-        itemList.add(new time_model("11:00-11:30","8"));
-        itemList.add(new time_model("10:30-11:00","11"));
-        itemList.add(new time_model("10:00-10:30","7"));
-        itemList.add(new time_model("9:30-10:00","5"));
-        itemList.add(new time_model("9:00-9:30","8"));
-        recyclerView.setAdapter(adapter);
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

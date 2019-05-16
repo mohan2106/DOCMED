@@ -2,8 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.lenovo.doc">
 
-    <uses-permission android:name="android.permission.INTERNET" />
-
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -11,6 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".reshedule_activity"></activity>
+        <activity android:name=".payment_gateway" />
         <activity
             android:name=".MainActivity"
             android:screenOrientation="portrait">
@@ -36,7 +36,6 @@
             android:name=".WelcomeActivity"
             android:label="@string/title_activity_welcome"
             android:theme="@style/AppTheme" />
-        <activity android:name=".BookApointment" />
         <activity android:name=".AddAddressActivity" />
         <activity android:name=".BookAppointment" />
         <activity android:name=".Doctor_profile" />
@@ -45,7 +44,10 @@
         <activity android:name=".chooseMedicine" />
         <activity android:name=".LoginNewActivity" />
         <activity android:name=".Signup_new_Activity" />
-        <activity android:name=".verifyOTP"></activity>
+        <activity android:name=".verifyOTP" />
+        <activity android:name=".CategoryActivity" />
+        <activity android:name=".paymentActivity" />
+        <activity android:name=".yourBooking" />
     </application>
 
 </manifest>

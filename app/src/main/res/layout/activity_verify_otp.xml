@@ -20,7 +20,7 @@
         android:layout_marginEnd="16sp"
         />
     <EditText
-        android:id="@+id/otp"
+        android:id="@+id/codeText"
         android:layout_width="match_parent"
         android:layout_height="50sp"
         android:padding="10dp"
@@ -30,8 +30,22 @@
         android:layout_marginStart="16sp"
         android:layout_marginEnd="16sp"
         android:inputType="text"/>
+    <TextView
+        android:id="@+id/resendButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Resend otp?"
+        android:textColor="#ffffff"
+        android:textSize="18sp"
+        android:layout_marginStart="16sp"
+        android:layout_marginEnd="16sp"
+        android:layout_gravity="end"
+        android:layout_marginTop="5sp"
+        android:textAlignment="textEnd"
+        android:background="@drawable/button_background_green"
+        android:padding="8sp"/>
     <Button
-        android:id="@+id/otp_btn"
+        android:id="@+id/verifyButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"

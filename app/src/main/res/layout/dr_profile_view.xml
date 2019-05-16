@@ -26,7 +26,6 @@
             android:src="@drawable/doctor_icon"
             app:layout_constraintStart_toStartOf="parent"
             />
-
         <TextView
             android:id="@+id/profile_name"
             android:layout_width="wrap_content"

@@ -13,7 +13,7 @@ public class MainActivity extends AppCompatActivity {
 
     private Button btn1,btn2;
     private FirebaseAuth mAuth;
-    private final int SPLASH_LENGTH=3000;
+    //private final int SPLASH_LENGTH=3000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
         btn2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this,SignUpActivity.class));
+                startActivity(new Intent(MainActivity.this,Signup_new_Activity.class));
             }
         });
     }
