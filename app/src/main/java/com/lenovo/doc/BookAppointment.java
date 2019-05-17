@@ -1,5 +1,6 @@
 package com.lenovo.doc;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.annotation.NonNull;
@@ -41,6 +42,7 @@ public class BookAppointment extends AppCompatActivity {
     private TextView city_view,loc_text;
     private String flag;
     private EditText search_et;
+    public static Activity book_appointment;
     private ArrayList<String> localityList;
     private TextView locality_view;
     private LatLng loc=null;
@@ -56,6 +58,7 @@ public class BookAppointment extends AppCompatActivity {
         sel_city=(Button)findViewById(R.id.select_city);
         search_et=(EditText)findViewById(R.id.search_et);
         loc_text=(TextView)findViewById(R.id.locality_text);
+        book_appointment=this;
         city_view=(TextView)findViewById(R.id.city_view);
         bar=new ProgressDialog(this);
         locality=(LinearLayout)findViewById(R.id.locality);

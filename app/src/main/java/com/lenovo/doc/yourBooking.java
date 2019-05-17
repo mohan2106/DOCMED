@@ -62,7 +62,7 @@ public class yourBooking extends AppCompatActivity {
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if(task.isSuccessful()){
                     for (QueryDocumentSnapshot documentSnapshot:task.getResult()){
-                        itemList.add(new your_booking_model(documentSnapshot.get("DrName").toString(),documentSnapshot.get("DrAddress").toString(),documentSnapshot.get("DrSpeciality").toString(),documentSnapshot.get("DrFee").toString(),documentSnapshot.get("DrImage").toString(),documentSnapshot.get("Status").toString(),documentSnapshot.get("Date").toString(),documentSnapshot.get("Time").toString(),documentSnapshot.get("lat").toString(),documentSnapshot.get("long").toString(),documentSnapshot.get("BookingId").toString()));
+                        itemList.add(new your_booking_model(documentSnapshot.get("DrName").toString(),documentSnapshot.get("DrAddress").toString(),documentSnapshot.get("DrSpeciality").toString(),documentSnapshot.get("DrFee").toString(),documentSnapshot.get("DrImage").toString(),documentSnapshot.get("Status").toString(),documentSnapshot.get("Date").toString(),documentSnapshot.get("Time").toString(),documentSnapshot.get("lat").toString(),documentSnapshot.get("long").toString(),documentSnapshot.get("BookingId").toString(),documentSnapshot.get("id").toString()));
 
                     }
                     adapter.notifyDataSetChanged();

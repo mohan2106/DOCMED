@@ -1,5 +1,6 @@
 package com.lenovo.doc;
 
+import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
@@ -47,6 +48,7 @@ public class Doctor_profile extends AppCompatActivity {
     private int x=100;
     private DatePickerDialog dbg;
     private ImageView mapImg;
+    public static Activity doctor_profile;
     private Button cont_btn;
     private String d,m,y;
     private int flag=99;
@@ -61,6 +63,7 @@ public class Doctor_profile extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_doctor_profile);
         call_for_detail=(LinearLayout)findViewById(R.id.call_for_details);
+        doctor_profile=this;
         pr_name=(TextView)findViewById(R.id.profile_name);
         special=(TextView)findViewById(R.id.profile_category);
         addr=(TextView)findViewById(R.id.profile_address);

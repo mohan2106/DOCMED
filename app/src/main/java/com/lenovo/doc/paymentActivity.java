@@ -1,5 +1,6 @@
 package com.lenovo.doc;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.annotation.NonNull;
@@ -40,6 +41,7 @@ public class paymentActivity extends AppCompatActivity {
     private TextView on;
     private String time;
     private ProgressDialog dialog;
+    public static Activity payment_activity;
     private TextView tvname, tvfee, tvaddress, tvdate, tvtime, tvspeciality;
     private Button confirm_btn;
     private String bookingCount;
@@ -54,6 +56,7 @@ public class paymentActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_payment);
+        payment_activity=this;
         Intent i = getIntent();
         name = i.getStringExtra("name");
         fee = i.getStringExtra("fee");
@@ -166,6 +169,9 @@ public class paymentActivity extends AppCompatActivity {
                                     public void onSuccess(Void aVoid) {
                                         Toast.makeText(paymentActivity.this, "Request Received", Toast.LENGTH_SHORT).show();
                                         startActivity(new Intent(paymentActivity.this,thankingActivity.class));
+                                        CategoryActivity.category_activity.finish();
+                                        BookAppointment.book_appointment.finish();
+                                        Doctor_profile.doctor_profile.finish();
                                         finish();
                                         dialog.dismiss();
                                     }

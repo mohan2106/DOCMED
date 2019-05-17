@@ -9,9 +9,17 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".thankingActivity"></activity>
-        <activity android:name=".reshedule_activity" />
-        <activity android:name=".payment_gateway" />
+        <activity android:name=".reviewThanks"></activity>
+        <activity android:name=".rateReview" />
+        <activity
+            android:name=".thankingActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".reshedule_activity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".payment_gateway"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".MainActivity"
             android:screenOrientation="portrait">
@@ -36,19 +44,44 @@
         <activity
             android:name=".WelcomeActivity"
             android:label="@string/title_activity_welcome"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
-        <activity android:name=".AddAddressActivity" />
-        <activity android:name=".BookAppointment" />
-        <activity android:name=".Doctor_profile" />
-        <activity android:name=".searchActivity" />
-        <activity android:name=".order_medicine_activity" />
-        <activity android:name=".chooseMedicine" />
-        <activity android:name=".LoginNewActivity" />
-        <activity android:name=".Signup_new_Activity" />
-        <activity android:name=".verifyOTP" />
-        <activity android:name=".CategoryActivity" />
-        <activity android:name=".paymentActivity" />
-        <activity android:name=".yourBooking" />
+        <activity
+            android:name=".AddAddressActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".BookAppointment"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Doctor_profile"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".searchActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".order_medicine_activity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".chooseMedicine"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".LoginNewActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Signup_new_Activity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".verifyOTP"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".CategoryActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".paymentActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".yourBooking"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

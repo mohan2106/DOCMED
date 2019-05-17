@@ -1,5 +1,6 @@
 package com.lenovo.doc;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.annotation.NonNull;
@@ -34,6 +35,7 @@ public class CategoryActivity extends AppCompatActivity {
     private Button gen_phy,all_doc;
     private ProgressDialog dialog;
     private EditText editText;
+    public static Activity category_activity;
     private FirebaseFirestore firebaseFirestore;
 
     @Override
@@ -41,6 +43,7 @@ public class CategoryActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_category);
         Intent intent=getIntent();
+        category_activity=this;
         //city=intent.getStringExtra("city");
         //local=intent.getStringExtra("local");
         editText=(EditText)findViewById(R.id.search_text);

@@ -73,6 +73,7 @@ public class your_booking_adapter extends RecyclerView.Adapter<your_booking_adap
                 viewModel.time.setTextColor(Color.parseColor("#178119"));
                 viewModel.cancel.setVisibility(View.GONE);
                 viewModel.manage.setVisibility(View.GONE);
+                viewModel.rate.setVisibility(View.VISIBLE);
                 break;
             default:
                 break;
@@ -96,7 +97,7 @@ public class your_booking_adapter extends RecyclerView.Adapter<your_booking_adap
         viewModel.cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(context, "cancel button clicked", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(context, "cancel button clicked", Toast.LENGTH_SHORT).show();
                 AlertDialog.Builder builder
                         = new AlertDialog
                         .Builder(context);
@@ -142,6 +143,15 @@ public class your_booking_adapter extends RecyclerView.Adapter<your_booking_adap
                 alertDialog.show();
             }
         });
+        final String id=ne.getId();
+        viewModel.rate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(context,rateReview.class);
+                intent.putExtra("id",id);
+                context.startActivity(intent);
+            }
+        });
         final String lat=ne.getLat();
         final String lng=ne.getLng();
         final String nm=ne.getName();
@@ -166,10 +176,12 @@ public class your_booking_adapter extends RecyclerView.Adapter<your_booking_adap
         private ImageView image,location;
         private TextView status,name,speciality,address,fee,date,time;
         private TextView manage,cancel;
+        private Button rate;
         public ViewModel(@NonNull View itemView) {
             super(itemView);
             image=(ImageView)itemView.findViewById(R.id.image);
             location=(ImageView)itemView.findViewById(R.id.map_image);
+            rate=(Button)itemView.findViewById(R.id.rate_review);
             status=(TextView)itemView.findViewById(R.id.status);
             name=(TextView)itemView.findViewById(R.id.name);
             speciality=(TextView)itemView.findViewById(R.id.speciality);

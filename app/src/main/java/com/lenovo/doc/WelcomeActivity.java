@@ -1,5 +1,8 @@
 package com.lenovo.doc;
 
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
@@ -41,11 +44,13 @@ public class WelcomeActivity extends AppCompatActivity
     private CircleImageView curuser_image;
     private ActionBarDrawerToggle toggle;
     private FrameLayout frameLayout;
+    public static Activity wel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
+        wel=this;
         firebaseAuth = FirebaseAuth.getInstance();
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         book_appoint=(LinearLayout)findViewById(R.id.book_appointment);
@@ -94,7 +99,47 @@ public class WelcomeActivity extends AppCompatActivity
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            super.onBackPressed();
+            AlertDialog.Builder builder
+                    = new AlertDialog
+                    .Builder(WelcomeActivity.this);
+            builder.setMessage("Are you sure want to exit the app?");
+
+            builder.setTitle("Alert !");
+
+            builder.setCancelable(false);
+            builder
+                    .setPositiveButton(
+                            "Yes",
+                            new DialogInterface.OnClickListener() {
+
+                                @Override
+                                public void onClick(DialogInterface dialog,
+                                                    int which)
+                                {
+                                    finish();
+                                    //finish();
+                                }
+                            });
+            builder
+                    .setNegativeButton(
+                            "No",
+                            new DialogInterface
+                                    .OnClickListener() {
+
+                                @Override
+                                public void onClick(DialogInterface dialog,
+                                                    int which)
+                                {
+                                    dialog.cancel();
+                                }
+                            });
+
+            // Create the Alert dialog
+            AlertDialog alertDialog = builder.create();
+
+            // Show the Alert Dialog box
+            alertDialog.show();
+            //super.onBackPressed();
         }
     }
 
