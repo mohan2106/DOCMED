@@ -5,14 +5,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:background="#f1eeee"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="150sp"
-        android:background="@drawable/dr_profile_background" />
+        android:layout_height="103sp"
+        android:background="@color/colorPrimary"
+        />
     <android.support.constraint.ConstraintLayout
-        android:layout_marginTop="103sp"
+        android:layout_marginTop="53sp"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -26,16 +27,17 @@
             android:src="@drawable/doctor_icon"
             app:layout_constraintStart_toStartOf="parent"
             />
+
         <TextView
             android:id="@+id/profile_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:textColor="#000000"
-            android:layout_marginTop="60dp"
+            android:layout_marginTop="8dp"
             android:text="Name"
+            android:textColor="#ffffff"
+            android:textSize="20sp"
+            android:textStyle="bold"
             app:layout_constraintStart_toEndOf="@+id/circleImageView"
             app:layout_constraintTop_toTopOf="@+id/circleImageView" />
 
@@ -44,6 +46,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
+            android:layout_marginTop="24dp"
+            android:textColor="#000000"
+            android:textSize="18sp"
             android:text="Category"
             app:layout_constraintStart_toEndOf="@+id/circleImageView"
             app:layout_constraintTop_toBottomOf="@+id/profile_name" />
@@ -53,142 +58,188 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="4dp"
             android:text="Experience"
-            app:layout_constraintStart_toStartOf="parent"
+            android:textColor="#000000"
+            android:textSize="16sp"
+            app:layout_constraintStart_toEndOf="@+id/circleImageView"
             app:layout_constraintTop_toBottomOf="@+id/profile_category" />
 
-        <TextView
-            android:id="@+id/profile_address"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="4dp"
-            android:text="Address"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/profile_experience" />
 
-        <ImageView
-            android:id="@+id/profile_map"
-            android:layout_width="40sp"
-            android:layout_height="40sp"
-            android:layout_marginEnd="16dp"
-            app:layout_constraintBottom_toBottomOf="@+id/profile_address"
+        <LinearLayout
+            android:id="@+id/linearLayout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="#ffffff"
+            android:elevation="3sp"
+            android:orientation="horizontal"
+            android:weightSum="8"
             app:layout_constraintEnd_toEndOf="parent"
-            app:srcCompat="@drawable/google_maps_icon" />
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/profile_experience">
 
-        <TextView
-            android:id="@+id/textView13"
-            android:layout_width="wrap_content"
+            <ImageView
+                android:layout_width="30sp"
+                android:layout_height="30sp"
+                android:layout_gravity="center"
+                android:layout_marginStart="8sp"
+                android:layout_weight="0.5"
+                android:src="@drawable/ic_home"
+                android:tint="#6F6D6D" />
+
+            <TextView
+                android:id="@+id/profile_address"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="8dp"
+                android:layout_weight="7"
+                android:text="Address"
+                android:textColor="#000000"
+                android:textSize="16sp" />
+
+            <ImageView
+                android:id="@+id/profile_map"
+                android:layout_width="40sp"
+                android:layout_height="40sp"
+                android:layout_marginEnd="16dp"
+                android:layout_weight="0.5"
+                app:srcCompat="@drawable/google_maps_icon" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layout5"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
-            android:textSize="18sp"
-            android:text="Contact Details"
+            android:background="#ffffff"
+            android:elevation="3sp"
+            android:orientation="vertical"
+            android:padding="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/profile_address" />
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout">
 
-        <TextView
-            android:id="@+id/textView14"
-            android:layout_width="wrap_content"
+            <TextView
+                android:id="@+id/textView19"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/ic_health_book"
+                android:drawableTint="#6F6D6D"
+                android:text=" Educational Background"
+                android:textColor="#000000"
+                android:textSize="18sp"
+                tools:layout_editor_absoluteX="60dp"
+                tools:layout_editor_absoluteY="350dp" />
+
+            <TextView
+                android:id="@+id/profile_education"
+                android:layout_width="wrap_content"
+                android:layout_marginTop="8sp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="MBBS from AIIMS Delhi \nMD from USA\nGold Medalist\nExperience of about more than 5 years"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:layout_editor_absoluteY="350dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linearLayout2"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
-            android:text="Phone No:"
+            android:layout_marginBottom="8dp"
+            android:background="#ffffff"
+            android:elevation="3sp"
+            android:orientation="horizontal"
+            android:padding="8dp"
+            android:weightSum="2"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView13" />
+            app:layout_constraintTop_toBottomOf="@+id/layout5">
 
-        <TextView
-            android:id="@+id/textView16"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:text="Email:"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView14" />
+            <LinearLayout
+                android:layout_width="0sp"
+                android:layout_height="match_parent"
+                android:layout_marginEnd="4sp"
+                android:layout_weight="1"
+                android:background="@drawable/button_corner"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="8sp">
 
-        <TextView
-            android:id="@+id/profile_contact"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:text="TextView"
-            app:layout_constraintBottom_toTopOf="@+id/textView16"
-            app:layout_constraintStart_toEndOf="@+id/textView14"
-            app:layout_constraintTop_toTopOf="@+id/textView14" />
+                <ImageView
+                    android:id="@+id/imageView6"
+                    android:layout_width="30sp"
+                    android:layout_height="30sp"
+                    android:tint="@color/colorPrimary"
+                    app:srcCompat="@android:drawable/btn_star"
+                    tools:layout_editor_absoluteX="50dp"
+                    tools:layout_editor_absoluteY="461dp" />
 
-        <TextView
-            android:id="@+id/profile_email"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:text="TextView"
-            app:layout_constraintBottom_toBottomOf="@+id/textView16"
-            app:layout_constraintStart_toEndOf="@+id/textView16"
-            app:layout_constraintTop_toBottomOf="@+id/textView14" />
+                <TextView
+                    android:id="@+id/profile_rating"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="4.5 STAR RATING"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="16dp"
+                    tools:layout_editor_absoluteX="66dp"
+                    tools:layout_editor_absoluteY="555dp" />
 
-        <TextView
-            android:id="@+id/textView19"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
-            android:text="Educational Background"
-            android:textSize="18sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView16" />
+                <TextView
+                    android:id="@+id/profile_no_of_rating"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="(325 ratings)"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="16sp" />
+            </LinearLayout>
 
-        <TextView
-            android:id="@+id/profile_education"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
-            android:text="MBBS from AIIMS Delhi \nMD from USA\nGold Medalist\nExperience of about more than 5 years"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView19" />
+            <LinearLayout
+                android:layout_width="0sp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="4sp"
+                android:layout_weight="1"
+                android:background="@drawable/button_corner"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="8sp">
 
-        <TextView
-            android:id="@+id/textView21"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
-            android:text="Satisfied Patients"
-            android:textSize="18sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/profile_education" />
+                <ImageView
+                    android:id="@+id/thumsup"
+                    android:layout_width="30sp"
+                    android:layout_height="30sp"
+                    android:src="@drawable/ic_thumb_up_black_24dp"
+                    android:tint="@color/colorPrimary"
+                    tools:layout_editor_absoluteX="50dp"
+                    tools:layout_editor_absoluteY="461dp" />
 
-        <ImageView
-            android:id="@+id/imageView6"
-            android:layout_width="30sp"
-            android:layout_height="30sp"
-            android:tint="#d99c21"
-            android:layout_marginStart="50dp"
-            android:layout_marginTop="8dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView21"
-            app:srcCompat="@android:drawable/btn_star" />
+                <TextView
+                    android:id="@+id/profile_recomendation"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="100% RECOMENDATION"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="16dp"
+                    tools:layout_editor_absoluteX="66dp"
+                    tools:layout_editor_absoluteY="555dp" />
 
-        <TextView
-            android:id="@+id/profile_rating"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="4.5 Rating"
-            android:textSize="20sp"
-            app:layout_constraintEnd_toEndOf="@+id/imageView6"
-            app:layout_constraintStart_toStartOf="@+id/imageView6"
-            app:layout_constraintTop_toBottomOf="@+id/imageView6" />
+                <TextView
+                    android:id="@+id/profile_no_of_votes_recomended"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="(350 votes)"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="16sp" />
+            </LinearLayout>
+        </LinearLayout>
 
-        <TextView
-            android:id="@+id/profile_no_of_rating"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:text="(325)"
-            app:layout_constraintBottom_toBottomOf="@+id/profile_rating"
-            app:layout_constraintStart_toEndOf="@+id/profile_rating"
-            app:layout_constraintTop_toTopOf="@+id/profile_rating" />
     </android.support.constraint.ConstraintLayout>
+
 
 </FrameLayout>

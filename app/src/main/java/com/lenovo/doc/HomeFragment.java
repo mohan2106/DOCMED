@@ -1,8 +1,10 @@
 package com.lenovo.doc;
 
 
+import android.app.ActivityOptions;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -16,7 +18,7 @@ import android.widget.LinearLayout;
  */
 public class HomeFragment extends Fragment {
 
-    private LinearLayout book_appoint,buy_med,call_us;
+    private LinearLayout book_appoint,buy_med,call_us,book;
 
 
     public HomeFragment() {
@@ -25,11 +27,11 @@ public class HomeFragment extends Fragment {
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(LayoutInflater inflater, final ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v= inflater.inflate(R.layout.fragment_home, container, false);
-
+        book=(LinearLayout) v.findViewById(R.id.health_book);
         book_appoint=(LinearLayout)v.findViewById(R.id.book_appointment);
         buy_med=(LinearLayout)v.findViewById(R.id.buy_medicine);
         call_us=(LinearLayout)v.findViewById(R.id.call_us_for_booking);
@@ -41,12 +43,29 @@ public class HomeFragment extends Fragment {
                 intent.putExtra("local","Locality");
                 intent.putExtra("flag","0");
                 intent.putExtra("category","Category");*/
-                startActivity(intent);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(getActivity()).toBundle());
+                }
+                else{
+                    startActivity(intent);
+                }
+            }
+        });
+        book.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    startActivity(new Intent(container.getContext(),HealthBookHome.class), ActivityOptions.makeSceneTransitionAnimation(getActivity()).toBundle());
+                }
+                else{
+                    startActivity(new Intent(container.getContext(),HealthBookHome.class));
+                }
             }
         });
         buy_med.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 startActivity(new Intent(getContext(),order_medicine_activity.class));
             }
         });
@@ -57,7 +76,13 @@ public class HomeFragment extends Fragment {
                 final String data="tel:"+telNumber;
                 Intent intent=new Intent(Intent.ACTION_DIAL);
                 intent.setData(Uri.parse(data));
-                startActivity(intent);
+                //startActivity(intent);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(getActivity()).toBundle());
+                }
+                else{
+                    startActivity(intent);
+                }
             }
         });
         return v;

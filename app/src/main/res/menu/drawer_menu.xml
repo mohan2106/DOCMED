@@ -14,9 +14,6 @@
         <item android:id="@+id/nav_health_book"
             android:icon="@drawable/ic_health_book"
             android:title="Health Book"/>
-        <item android:id="@+id/nav_address"
-            android:icon="@drawable/ic_location"
-            android:title="Manage Address"/>
         <item android:id="@+id/nav_appointment"
             android:title="Your appointment"
             android:icon="@drawable/ic_consult"/>

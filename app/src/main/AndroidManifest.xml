@@ -9,7 +9,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".reviewThanks"></activity>
+        <activity android:name=".LabReports"></activity>
+        <activity android:name=".ImageViewer" />
+        <activity android:name=".prescriptionUploadActivity" />
+        <activity android:name=".HealthBookHome" />
+        <activity android:name=".reviewThanks" />
         <activity android:name=".rateReview" />
         <activity
             android:name=".thankingActivity"
@@ -46,9 +50,6 @@
             android:label="@string/title_activity_welcome"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
-        <activity
-            android:name=".AddAddressActivity"
-            android:screenOrientation="portrait" />
         <activity
             android:name=".BookAppointment"
             android:screenOrientation="portrait" />
