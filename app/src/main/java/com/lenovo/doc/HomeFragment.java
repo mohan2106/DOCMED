@@ -55,10 +55,10 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                    startActivity(new Intent(container.getContext(),HealthBookHome.class), ActivityOptions.makeSceneTransitionAnimation(getActivity()).toBundle());
+                    startActivity(new Intent(container.getContext(),HealthBookActivity.class), ActivityOptions.makeSceneTransitionAnimation(getActivity()).toBundle());
                 }
                 else{
-                    startActivity(new Intent(container.getContext(),HealthBookHome.class));
+                    startActivity(new Intent(container.getContext(),HealthBookActivity.class));
                 }
             }
         });

@@ -212,7 +212,7 @@ public class WelcomeActivity extends AppCompatActivity
                 }
                 break;
             case R.id.nav_health_book:
-                Intent intent3=new Intent(WelcomeActivity.this,HealthBookHome.class);
+                Intent intent3=new Intent(WelcomeActivity.this,HealthBookActivity.class);
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                     startActivity(intent3, ActivityOptions.makeSceneTransitionAnimation(WelcomeActivity.this).toBundle());
                 }

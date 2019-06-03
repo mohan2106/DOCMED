@@ -42,6 +42,69 @@ public class MeasurementActivity extends AppCompatActivity {
                 }
             }
         });
+        pulse.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(MeasurementActivity.this,HeightWeightPulseActivity.class);
+                intent.putExtra("head","Pulse Rate");
+                intent.putExtra("unit","beats/min");
+                intent.putExtra("loc","PulaseRate");
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(MeasurementActivity.this).toBundle());
+                }
+                else{
+                    startActivity(intent);
+                }
+            }
+        });
+        height.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(MeasurementActivity.this,HeightWeightPulseActivity.class);
+                intent.putExtra("head","Height");
+                intent.putExtra("unit","cm");
+                intent.putExtra("loc","Height");
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(MeasurementActivity.this).toBundle());
+                }
+                else{
+                    startActivity(intent);
+                }
+            }
+        });
+
+        weight.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(MeasurementActivity.this,HeightWeightPulseActivity.class);
+                intent.putExtra("head","Weight");
+                intent.putExtra("unit","Kg");
+                intent.putExtra("loc","Weight");
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(MeasurementActivity.this).toBundle());
+                }
+                else{
+                    startActivity(intent);
+                }
+            }
+        });
+
+        sugar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(MeasurementActivity.this,HeightWeightPulseActivity.class);
+                intent.putExtra("head","Sugar Level");
+                intent.putExtra("unit","mmol/l");
+                intent.putExtra("loc","SugerLevel");
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(MeasurementActivity.this).toBundle());
+                }
+                else{
+                    startActivity(intent);
+                }
+            }
+        });
+
 
     }
 

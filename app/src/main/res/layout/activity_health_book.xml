@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:background="@drawable/profile_back_gradient"
     android:layout_height="match_parent"
-    tools:context=".HealthBookHome">
+    tools:context=".HealthBookActivity">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/layout"
@@ -22,7 +22,6 @@
             app:popupTheme="@style/AppTheme.PopupOverlay" />
 
     </android.support.design.widget.AppBarLayout>
-
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/prep_image"
         android:layout_width="100sp"
@@ -134,5 +133,6 @@
         app:layout_constraintEnd_toEndOf="@+id/drug_reception_image"
         app:layout_constraintStart_toStartOf="@+id/drug_reception_image"
         app:layout_constraintTop_toBottomOf="@+id/drug_reception_image" />
+
 
 </android.support.constraint.ConstraintLayout>

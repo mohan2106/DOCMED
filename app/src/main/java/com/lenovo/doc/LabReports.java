@@ -175,7 +175,7 @@ public class LabReports extends AppCompatActivity {
                 final String dr_address=add.getText().toString();
                 final String dr_reason=reason.getText().toString();
                 final String id=String.valueOf(System.currentTimeMillis());
-                if((imageUri != null) && (!TextUtils.isEmpty(dr_name)) && (!TextUtils.isEmpty(dr_address)) && (!TextUtils.isEmpty(dr_reason)) && (date.getText().toString() != "choose date") ){
+                if((imageUri != null) && (!TextUtils.isEmpty(dr_name)) && (!TextUtils.isEmpty(dr_address)) && (!TextUtils.isEmpty(dr_reason)) && !(date.getText().toString().equals("Choose Date")) ){
                     //String usserPassword=password.getText().toString();
                     pb.setMessage("Uploading your data...");
                     pb.show();
