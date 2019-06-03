@@ -72,7 +72,19 @@
             android:id="@+id/search"
             android:layout_gravity="center"
             android:gravity="center"
-            android:layout_height="56sp">
+            android:orientation="vertical"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp">
+            <TextView
+                android:id="@+id/locality_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#ffffff"
+                android:layout_marginEnd="10sp"
+                android:text="Locality"
+                android:drawableRight="@drawable/ic_location"
+                android:drawableTint="#ffffff"
+                android:textAlignment="textEnd"/>
             <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="40sp"
@@ -120,6 +132,7 @@
         android:id="@+id/profile_layout"
         android:layout_width="match_parent"
         android:layout_height="56sp"
+        android:visibility="gone"
         android:layout_alignParentStart="true"
         android:layout_alignParentBottom="true"
         android:orientation="horizontal"

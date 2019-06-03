@@ -11,9 +11,13 @@ public class your_booking_model {
     private String status;
     private String date;
     private String time;
+    private String id;
+    private String lat;
+    private String lng;
+    private String bookingId;
     //private GeoPoint location;
 
-    public your_booking_model(String name, String address, String speciality, String fee, String image, String status, String date, String time) {
+    public your_booking_model(String name, String address, String speciality, String fee, String image, String status, String date, String time,String lat,String lng,String bookingId,String id) {
         this.name = name;
         this.address = address;
         this.speciality = speciality;
@@ -22,6 +26,10 @@ public class your_booking_model {
         this.status = status;
         this.date = date;
         this.time = time;
+        this.lat=lat;
+        this.lng=lng;
+        this.id=id;
+        this.bookingId=bookingId;
         //this.location = location;
     }
 
@@ -89,4 +97,35 @@ public class your_booking_model {
         this.time = time;
     }
 
+    public String getLat() {
+        return lat;
+    }
+
+    public void setLat(String lat) {
+        this.lat = lat;
+    }
+
+    public String getLng() {
+        return lng;
+    }
+
+    public void setLng(String lng) {
+        this.lng = lng;
+    }
+
+    public String getBookingId() {
+        return bookingId;
+    }
+
+    public void setBookingId(String bookingId) {
+        this.bookingId = bookingId;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 }

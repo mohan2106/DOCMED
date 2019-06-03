@@ -1,5 +1,6 @@
 package com.lenovo.doc;
 
+import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
@@ -14,12 +15,17 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.GeoPoint;
 
 import java.util.ArrayList;
@@ -41,23 +47,29 @@ public class Doctor_profile extends AppCompatActivity {
     private TextView time_show;
     private int x=100;
     private DatePickerDialog dbg;
+    private ImageView mapImg;
+    public static Activity doctor_profile;
     private Button cont_btn;
     private String d,m,y;
     private int flag=99;
     private TextView date_view;
     //private List<time_model> itemList;
     private CircleImageView img;
+    private FirebaseFirestore firestore=FirebaseFirestore.getInstance();
+    private FirebaseAuth mAuth = FirebaseAuth.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_doctor_profile);
         call_for_detail=(LinearLayout)findViewById(R.id.call_for_details);
+        doctor_profile=this;
         pr_name=(TextView)findViewById(R.id.profile_name);
         special=(TextView)findViewById(R.id.profile_category);
         addr=(TextView)findViewById(R.id.profile_address);
         exper=(TextView)findViewById(R.id.profile_experience);
         img=(CircleImageView)findViewById(R.id.circleImageView);
+        mapImg=(ImageView)findViewById(R.id.profile_map);
         time_show=(TextView)findViewById(R.id.time_show);
         cont_btn=(Button)findViewById(R.id.continue_btn);
         btnList=new ArrayList<>();
@@ -110,6 +122,7 @@ public class Doctor_profile extends AppCompatActivity {
                 }
             });
         }
+
         Intent i=getIntent();
         final String name=i.getStringExtra("name");
         final String fee=i.getStringExtra("fee");
@@ -117,6 +130,9 @@ public class Doctor_profile extends AppCompatActivity {
         final String address=i.getStringExtra("address");
         final String speciality=i.getStringExtra("speciality");
         final String image=i.getStringExtra("image");
+        final String lat=i.getStringExtra("lat");
+        final String lng=i.getStringExtra("long");
+        final String id=i.getStringExtra("id");
         //final GeoPoint loc=i.getParcelableExtra("location");
         Glide.with(this)
                 .load(image)
@@ -156,12 +172,39 @@ public class Doctor_profile extends AppCompatActivity {
 
             }
         });
+        final String[] no=new String[1];
+        firestore.collection("BookingCount").document("India").get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                if(documentSnapshot.exists()){
+                    //on.setText(documentSnapshot.getString("count"));
+                    //Toast.makeText(paymentActivity.this, on.getText().toString(), Toast.LENGTH_SHORT).show();
+                    no[0]=documentSnapshot.getString("count");
+                    //DocName[0] =String.valueOf(Integer.parseInt(documentSnapshot.getString("count"))+1);
+                }
+                else{
+                    //Toast.makeText(paymentActivity.this, "document not exist", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        //Toast.makeText(this, lat+"  "+lng, Toast.LENGTH_SHORT).show();
+        mapImg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=null,chooser=null;
+                intent=new Intent(Intent.ACTION_VIEW);
+                intent.setData(Uri.parse("geo:"+lat+","+lng+"?q="+lat+","+lng+"("+name+")&iwloc=A&hl=es"));
+                chooser=Intent.createChooser(intent,"Launch Maps");
+                startActivity(intent);
+            }
+        });
         //final com.lenovo.doc.Model model=new com.lenovo.doc.Model();
         //model.setGeoPoint(loc);
         cont_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(x<24){
+                if(x<24 && d!=null){
                     Intent intent=new Intent(Doctor_profile.this,paymentActivity.class);
                     intent.putExtra("name",name);
                     intent.putExtra("fee",fee);
@@ -171,12 +214,16 @@ public class Doctor_profile extends AppCompatActivity {
                     intent.putExtra("day",d);
                     intent.putExtra("month",m);
                     intent.putExtra("year",y);
+                    intent.putExtra("lat",lat);
+                    intent.putExtra("count",no[0]);
+                    intent.putExtra("long",lng);
                     intent.putExtra("time",btnList.get(x).getText());
+                    intent.putExtra("id",id);
                     //intent.putExtra("location",model);
                     startActivity(intent);
                 }
                 else{
-                    Toast.makeText(Doctor_profile.this, "Choose Time", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Doctor_profile.this, "Date and Time must required", Toast.LENGTH_SHORT).show();
                 }
 
             }

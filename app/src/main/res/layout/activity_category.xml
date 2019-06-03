@@ -4,16 +4,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/profile_back_gradient"
     tools:context=".CategoryActivity">
+
     <TextView
         android:id="@+id/search_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:text="Choose Category"
+        android:textColor="#ffffff"
         android:textSize="20sp"
-        android:textColor="#000000"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -22,16 +24,16 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:padding="10sp"
-        android:layout_marginTop="9dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
+        android:background="@drawable/edit_text_back_white"
         android:ems="10"
-        android:background="@drawable/button_shape"
-        android:inputType="textPersonName"
         android:hint="Search here..."
+        android:inputType="textPersonName"
+        android:padding="10sp"
         app:layout_constraintEnd_toStartOf="@+id/search_icon"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/search_title" />
+        app:layout_constraintTop_toBottomOf="@+id/linearLayoutall" />
 
     <ImageView
         android:id="@+id/search_icon"
@@ -47,10 +49,50 @@
         android:id="@+id/recycler_view"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:background="@drawable/background_layout"
+        android:layout_margin="10sp"
+        android:padding="5sp"
         android:layout_marginTop="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/search_text" />
+
+    <LinearLayout
+        android:id="@+id/linearLayoutall"
+        android:layout_width="0dp"
+        android:layout_height="60sp"
+        android:layout_marginStart="10sp"
+        android:layout_marginEnd="10sp"
+        android:layout_marginTop="8dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/search_title"
+        android:weightSum="2">
+        <Button
+            android:layout_width="0sp"
+            android:id="@+id/general_phy"
+            android:layout_height="match_parent"
+            android:backgroundTint="#ffffff"
+            android:background="@drawable/background_layout"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:layout_margin="5sp"
+            android:ems="10"
+            android:text="General Physian"
+            android:layout_weight="1"/>
+        <Button
+            android:layout_width="0sp"
+            android:id="@+id/all_doc"
+            android:layout_height="match_parent"
+            android:background="@drawable/background_layout"
+            android:text="ALL doctors"
+            android:ems="10"
+            android:layout_margin="5sp"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:layout_weight="1"/>
+    </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>

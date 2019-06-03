@@ -1,5 +1,6 @@
 package com.lenovo.doc;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.annotation.NonNull;
@@ -41,7 +42,9 @@ public class BookAppointment extends AppCompatActivity {
     private TextView city_view,loc_text;
     private String flag;
     private EditText search_et;
+    public static Activity book_appointment;
     private ArrayList<String> localityList;
+    private TextView locality_view;
     private LatLng loc=null;
     private ProgressDialog bar;
     private Button sel_city,category;
@@ -55,9 +58,11 @@ public class BookAppointment extends AppCompatActivity {
         sel_city=(Button)findViewById(R.id.select_city);
         search_et=(EditText)findViewById(R.id.search_et);
         loc_text=(TextView)findViewById(R.id.locality_text);
+        book_appointment=this;
         city_view=(TextView)findViewById(R.id.city_view);
         bar=new ProgressDialog(this);
         locality=(LinearLayout)findViewById(R.id.locality);
+        locality_view=(TextView)findViewById(R.id.locality_view);
         category=(Button)findViewById(R.id.category);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
@@ -93,7 +98,7 @@ public class BookAppointment extends AppCompatActivity {
                 filter(s.toString());
             }
         });
-        category.setOnClickListener(new View.OnClickListener() {
+        /*category.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent=new Intent(BookAppointment.this,CategoryActivity.class);
@@ -101,9 +106,9 @@ public class BookAppointment extends AppCompatActivity {
                 intent.putExtra("local",local);
                 startActivity(intent);
             }
-        });
+        });*/
         city_view.setText(City);
-        loc_text.setText(local);
+        locality_view.setText(local);
 
         cityList = new ArrayList<>();
         cityList.add("Jaipur");
@@ -161,7 +166,7 @@ public class BookAppointment extends AppCompatActivity {
                 //startActivity(new Intent(BookAppointment.this,searchActivity.class));
             }
         });
-        locality.setOnClickListener(new View.OnClickListener() {
+        locality_view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent=new Intent(BookAppointment.this,searchActivity.class);
@@ -188,7 +193,7 @@ public class BookAppointment extends AppCompatActivity {
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if(task.isSuccessful()){
                     for(QueryDocumentSnapshot documentSnapshot: task.getResult()){
-                        itemList.add(new doctor_details_class(documentSnapshot.get("Name").toString(),documentSnapshot.get("Address").toString(),documentSnapshot.get("Fee").toString(),documentSnapshot.get("Image").toString(),documentSnapshot.get("Experience").toString(),documentSnapshot.get("Speciality").toString(),(GeoPoint)documentSnapshot.get("Location")));
+                        itemList.add(new doctor_details_class(documentSnapshot.get("Name").toString(),documentSnapshot.get("Address").toString(),documentSnapshot.get("Fee").toString(),documentSnapshot.get("Image").toString(),documentSnapshot.get("Experience").toString(),documentSnapshot.get("Speciality").toString(),(GeoPoint)documentSnapshot.get("Location"),documentSnapshot.get("id").toString()));
                     }
                     adapter.notifyDataSetChanged();
                 }

@@ -1,4 +1,5 @@
 package com.lenovo.doc;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
@@ -49,6 +50,7 @@ public class cityListAdapter extends RecyclerView.Adapter<cityListAdapter.ViewHo
                     intent.putExtra("local",city);
                 }
                 context.startActivity(intent);
+                ((Activity)(context)).finish();
             }
         });
     }

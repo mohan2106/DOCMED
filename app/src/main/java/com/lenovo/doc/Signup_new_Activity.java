@@ -1,7 +1,11 @@
 package com.lenovo.doc;
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -12,158 +16,266 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseException;
+import com.google.firebase.FirebaseTooManyRequestsException;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
+import com.ybs.countrypicker.CountryPicker;
+import com.ybs.countrypicker.CountryPickerListener;
 
+import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
 public class Signup_new_Activity extends AppCompatActivity {
 
-    private EditText mobile;
-    //private EditText pass;
-    private Button signup;
-    private FirebaseAuth mAuth;
-    private String codeSent;
-    private Button btn;
-    private TextView no,cr;
-    private EditText otp;
+    private static final String TAG = "PhoneAuth";
+
+    MaterialDialog process_dialog;
+
+    private EditText phoneText;
+    private EditText codeText;
+    private Button verifyButton;
+    private Button sendButton;
+    private TextView resendButton;
+
+    private String uid;
+    private String country_code;
+
+    private String phoneVerificationId;
+    private PhoneAuthProvider.OnVerificationStateChangedCallbacks
+            verificationCallbacks;
+    private PhoneAuthProvider.ForceResendingToken resendToken;
+
+
+    private FirebaseAuth fbAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup_new_);
 
-        mobile=(EditText)findViewById(R.id.signin_contact_new);
-        //pass=(EditText)findViewById(R.id.signin_password_new);
-        signup=(Button)findViewById(R.id.login_btn_new);
-        btn=(Button)findViewById(R.id.otp_btn);
-        cr=(TextView)findViewById(R.id.create_text);
-        no=(TextView)findViewById(R.id.otp_text);
-        mAuth=FirebaseAuth.getInstance();
-        otp=(EditText)findViewById(R.id.otp);
-        /*btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                verifyOtp();
-            }
-        });*/
-        signup.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //signupfn();
-                String mobile2 = mobile.getText().toString().trim();
+        fbAuth = FirebaseAuth.getInstance();
 
-                if(mobile2.isEmpty() || mobile.length() < 10){
-                    mobile.setError("Enter a valid mobile");
-                    mobile.requestFocus();
-                    return;
+
+        phoneText = findViewById(R.id.phoneText);
+        codeText = findViewById(R.id.codeText);
+        verifyButton = findViewById(R.id.verifyButton);
+        sendButton = findViewById(R.id.sendButton);
+        resendButton = findViewById(R.id.resendButton);
+        country_code = "+91";
+        FirebaseAuth.AuthStateListener mAuthListener;
+
+
+
+
+        sendButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                try {
+                    if (!isConnected()) {
+                        //  Toast.makeText(LoginActivity.this, "Network problem", Toast.LENGTH_SHORT).show();
+                        Snackbar.make(view, "Sorry there was a problem with your network", Snackbar.LENGTH_LONG)
+                                .setAction("Check Internet", null).show();
+                    }
+                    else {
+
+                        sendCode(view);
+                    }
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
+            }
 
-                Intent intent = new Intent(Signup_new_Activity.this, verifyOTP.class);
-                intent.putExtra("mobile", mobile2);
-                startActivity(intent);
+        });
+
+
+
+        // fbAuth = FirebaseAuth.getInstance();
+
+
+        final EditText codeText = findViewById(R.id.text_countrycode);
+
+        codeText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                final CountryPicker picker = CountryPicker.newInstance("Select Country");  // dialog title
+                picker.setListener(new CountryPickerListener() {
+                    @Override
+                    public void onSelectCountry(String name, String code, String dialCode, int flagDrawableResID) {
+                        // Implement your code here
+                        codeText.setText(dialCode);
+                        country_code = dialCode;
+                        picker.dismiss();
+                    }
+                });
+                picker.show(getSupportFragmentManager(), "COUNTRY_PICKER");
+
             }
         });
-    }
-    private void signupfn(){
-        String ph=mobile.getText().toString();
-        if(TextUtils.isEmpty(ph)){
-            mobile.setError("Phone no is required");
-            mobile.requestFocus();
-            return;
-        }
-        /*String pas=pass.getText().toString();
-        if(TextUtils.isEmpty(pas)){
-            pass.setError("Email is required");
-            pass.requestFocus();
-            return;
-        }*/
-        if(!Patterns.PHONE.matcher(ph).matches()){
-            mobile.setError("Enter correcct phone no");
-            mobile.requestFocus();
-            return;
-        }
-        /*if(pas.length()<6){
-            pass.setError("Password length should be more than 6");
-            pass.requestFocus();
-            return;
-        }*/
-        PhoneAuthProvider.getInstance().verifyPhoneNumber(
-                "+91"+ph,        // Phone number to verify
-                60,                 // Timeout duration
-                TimeUnit.SECONDS,   // Unit of timeout
-                this,               // Activity (for callback binding)
-                mCallbacks);        // OnVerificationStateChangedCallbacks
-        //Intent intent=new Intent(Signup_new_Activity.this,verifyOTP.class);
-        //intent.putExtra("OTP",codeSent);
-        //startActivity(intent);
-        cr.setVisibility(View.GONE);
-        mobile.setVisibility(View.GONE);
-        //pass.setVisibility(View.GONE);
-        signup.setVisibility(View.GONE);
-        btn.setVisibility(View.VISIBLE);
-        no.setVisibility(View.VISIBLE);
-        cr.setVisibility(View.VISIBLE);
-        otp.setVisibility(View.VISIBLE);
 
 
     }
-    PhoneAuthProvider.OnVerificationStateChangedCallbacks mCallbacks=new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
-        @Override
-        public void onVerificationCompleted(PhoneAuthCredential phoneAuthCredential) {
 
+
+    private void goToHome() {
+        Intent intent = new Intent(Signup_new_Activity.this,WelcomeActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK| Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+    }
+
+
+    public void sendCode(View view) {
+
+        String phoneNumber = country_code + phoneText.getText().toString();
+        if (phoneNumber.length() >= 10) {
+
+            setUpVerificatonCallbacks();
+
+
+            PhoneAuthProvider.getInstance().verifyPhoneNumber(
+                    phoneNumber,        // Phone number to verify
+                    60,                 // Timeout duration
+                    TimeUnit.SECONDS,   // Unit of timeout
+                    this,               // Activity (for callback binding)
+                    verificationCallbacks);
+
+            //Set processing indicators
+            MaterialDialog.Builder builder = new MaterialDialog.Builder(this)
+                    .title("Sending code")
+                    .content("Please wait")
+                    .progress(true, 0);
+
+            process_dialog = builder.build();
+            process_dialog.show();
+        }else {
+            Toast.makeText(this, "Please enter a valid number", Toast.LENGTH_SHORT).show();
         }
+    }
 
-        @Override
-        public void onVerificationFailed(FirebaseException e) {
+    private void setUpVerificatonCallbacks() {
 
-        }
+        verificationCallbacks =
+                new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
 
-        @Override
-        public void onCodeSent(String s, PhoneAuthProvider.ForceResendingToken forceResendingToken) {
-            super.onCodeSent(s, forceResendingToken);
-            codeSent=s;
-            Toast.makeText(Signup_new_Activity.this, s, Toast.LENGTH_SHORT).show();
-        }
-    };
+                    @Override
+                    public void onVerificationCompleted(
+                            PhoneAuthCredential credential) {
 
-    private void verifyOtp(){
-        PhoneAuthCredential credential=PhoneAuthProvider.getCredential(codeSent,otp.getText().toString());
+                        //   signoutButton.setEnabled(true);
+                        //   statusText.setText("Signed In");
+
+                        codeText.setText("");
+                        signInWithPhoneAuthCredential(credential);
+                    }
+
+                    @Override
+                    public void onVerificationFailed(FirebaseException e) {
+
+                        if (e instanceof FirebaseAuthInvalidCredentialsException) {
+                            // Invalid request
+                            Toast.makeText(Signup_new_Activity.this, "Invalid credential", Toast.LENGTH_SHORT).show();
+                        } else if (e instanceof FirebaseTooManyRequestsException) {
+                            // SMS quota exceeded
+                            Toast.makeText(Signup_new_Activity.this, "Limit Reached Try Again In a few Hours", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                    @Override
+                    public void onCodeSent(String verificationId, PhoneAuthProvider.ForceResendingToken token) {
+
+                        phoneVerificationId = verificationId;
+                        resendToken = token;
+                        verifyButton.setVisibility(View.VISIBLE);
+                        codeText.setVisibility(View.VISIBLE);
+                        sendButton.setEnabled(false);
+                        resendButton.setVisibility(View.VISIBLE);
+
+                        process_dialog.dismiss();
+                    }
+                };
+    }
+
+    public void verifyCode(View view) {
+
+        String code = codeText.getText().toString();
+
+        PhoneAuthCredential credential =
+                PhoneAuthProvider.getCredential(phoneVerificationId, code);
         signInWithPhoneAuthCredential(credential);
+
+        //Set processing indicators
+        MaterialDialog.Builder builder = new MaterialDialog.Builder(this)
+                .title("Verifying code")
+                .content("Please wait")
+                .progress(true, 0);
+
+        process_dialog = builder.build();
+        process_dialog.show();
     }
-    private void signInWithPhoneAuthCredential(PhoneAuthCredential credential) {
-        mAuth.signInWithCredential(credential)
+
+    private void signInWithPhoneAuthCredential(final PhoneAuthCredential credential) {
+        fbAuth.signInWithCredential(credential)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in user's information
-                            //Log.d(TAG, "signInWithCredential:success");
-                            startActivity(new Intent(Signup_new_Activity.this,WelcomeActivity.class));
-                            finish();
+                            codeText.setText("");
+
+                            goToHome();
                             FirebaseUser user = task.getResult().getUser();
-                            // ...
+
+                            uid = user.getUid();
+
+                            process_dialog.dismiss();
+
                         } else {
-                            // Sign in failed, display a message and update the UI
-                            //Log.w(TAG, "signInWithCredential:failure", task.getException());
-                            if (task.getException() instanceof FirebaseAuthInvalidCredentialsException) {
-                                String error=task.getException().getMessage();
-                                Toast.makeText(Signup_new_Activity.this, error, Toast.LENGTH_SHORT).show();
+                            if (task.getException() instanceof
+                                    FirebaseAuthInvalidCredentialsException) {
                                 // The verification code entered was invalid
-                            }
-                            else{
-                                String error=task.getException().getMessage();
-                                Toast.makeText(Signup_new_Activity.this, error, Toast.LENGTH_SHORT).show();
                             }
                         }
                     }
                 });
     }
+
+    public void resendCode(View view) {
+
+        String phoneNumber = phoneText.getText().toString();
+
+        setUpVerificatonCallbacks();
+
+        PhoneAuthProvider.getInstance().verifyPhoneNumber(
+                phoneNumber,
+                60,
+                TimeUnit.SECONDS,
+                this,
+                verificationCallbacks,
+                resendToken);
+        MaterialDialog.Builder builder = new MaterialDialog.Builder(this)
+                .title("Sending code")
+                .content("Please wait")
+                .progress(true, 0);
+
+        process_dialog = builder.build();
+        process_dialog.show();
+    }
+    public boolean isConnected() throws InterruptedException, IOException
+    {
+        ConnectivityManager cm =
+                (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = cm.getActiveNetworkInfo();
+        return netInfo != null && netInfo.isConnectedOrConnecting();
+    }
+
+
 }

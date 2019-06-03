@@ -1,5 +1,6 @@
 package com.lenovo.doc;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.annotation.NonNull;
@@ -11,6 +12,7 @@ import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -30,8 +32,10 @@ public class CategoryActivity extends AppCompatActivity {
     private category_adapter adapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private String city,local;
+    private Button gen_phy,all_doc;
     private ProgressDialog dialog;
     private EditText editText;
+    public static Activity category_activity;
     private FirebaseFirestore firebaseFirestore;
 
     @Override
@@ -39,10 +43,35 @@ public class CategoryActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_category);
         Intent intent=getIntent();
-        city=intent.getStringExtra("city");
-        local=intent.getStringExtra("local");
+        category_activity=this;
+        //city=intent.getStringExtra("city");
+        //local=intent.getStringExtra("local");
         editText=(EditText)findViewById(R.id.search_text);
         dialog=new ProgressDialog(this);
+        gen_phy=(Button)findViewById(R.id.general_phy);
+        all_doc=(Button)findViewById(R.id.all_doc);
+        gen_phy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(CategoryActivity.this,BookAppointment.class);
+                intent.putExtra("flag","0");
+                intent.putExtra("city_name",city);
+                intent.putExtra("local",local);
+                intent.putExtra("category","General");
+                startActivity(intent);
+            }
+        });
+        all_doc.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(CategoryActivity.this,BookAppointment.class);
+                intent.putExtra("flag","0");
+                intent.putExtra("city_name",city);
+                intent.putExtra("local",local);
+                intent.putExtra("category","All Doctors");
+                startActivity(intent);
+            }
+        });
         //firebaseFirestore=FirebaseFirestore.getInstance();
         //recyclerView=(RecyclerView)findViewById(R.id.recycler_view);
         createExampleList();
@@ -88,7 +117,7 @@ public class CategoryActivity extends AppCompatActivity {
         itemList = new ArrayList<>();
         //dialog.setMessage("Loading Category");
         //dialog.show();
-        Toast.makeText(this, "in category example funstion", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, "in category example funstion", Toast.LENGTH_SHORT).show();
         firebaseFirestore=FirebaseFirestore.getInstance();
         firebaseFirestore.collection("DoctorsCategory").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
