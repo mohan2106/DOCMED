@@ -11,46 +11,38 @@ import android.view.View;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class HealthBookHome extends AppCompatActivity {
-    private CircleImageView add_prep,add_lab,add_measure,add_medi;
+public class MeasurementActivity extends AppCompatActivity {
+
+    private CircleImageView blood,pulse,weight,sugar,height;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_health_book_home);
-
+        setContentView(R.layout.activity_measurement);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        toolbar.setTitle("Your Health Book");
+        toolbar.setTitle("Measurements");
+        blood=(CircleImageView)findViewById(R.id.measure_1);
+        pulse=(CircleImageView)findViewById(R.id.measure_2);
+        weight=findViewById(R.id.measure_5);
+        sugar=findViewById(R.id.measure_4);
+        height=findViewById(R.id.measure_3);
 
-        add_prep=(CircleImageView)findViewById(R.id.prep_image);
-        add_prep.setOnClickListener(new View.OnClickListener() {
+        blood.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(HealthBookHome.this,prescriptionUploadActivity.class);
+                Intent intent=new Intent(MeasurementActivity.this,BloodPressureActivity.class);
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                    startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(HealthBookHome.this).toBundle());
+                    startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(MeasurementActivity.this).toBundle());
                 }
                 else{
                     startActivity(intent);
                 }
             }
         });
-        add_lab=(CircleImageView)findViewById(R.id.lab_report_image);
-        add_lab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent=new Intent(HealthBookHome.this,LabReports.class);
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                    startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(HealthBookHome.this).toBundle());
-                }
-                else{
-                    startActivity(intent);
-                }
-            }
-        });
+
     }
 
     @Override

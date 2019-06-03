@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/profile_back_gradient"
+    tools:context=".MeasurementActivity">
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:popupTheme="@style/AppTheme.PopupOverlay"
+            app:title="Measurements" />
+
+    </android.support.design.widget.AppBarLayout>
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/measure_1"
+        android:layout_width="100sp"
+        android:layout_height="100sp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        app:civ_border_color="#ffffff"
+        android:src="@drawable/blood_pressure"
+        app:civ_border_width="2dp"
+        app:layout_constraintBottom_toTopOf="@+id/measure_5"
+        app:layout_constraintEnd_toStartOf="@+id/measure_5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/layout" />
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/measure_2"
+        android:layout_width="100sp"
+        android:layout_height="100sp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:src="@drawable/pulse_rate"
+        app:civ_border_color="#ffffff"
+        app:civ_border_width="2dp"
+        app:layout_constraintBottom_toTopOf="@+id/measure_5"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/measure_5"
+        app:layout_constraintTop_toBottomOf="@+id/layout" />
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/measure_4"
+        android:layout_width="100sp"
+        android:layout_height="100sp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:src="@drawable/sugar_level"
+        app:civ_border_color="#ffffff"
+        app:civ_border_width="2dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/measure_5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/measure_5" />
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/measure_3"
+        android:layout_width="100sp"
+        android:layout_height="100sp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:src="@drawable/height"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        app:civ_border_color="#ffffff"
+        app:civ_border_width="2dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/measure_5"
+        app:layout_constraintTop_toBottomOf="@+id/measure_5" />
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/measure_5"
+        android:layout_width="100sp"
+        android:layout_height="100sp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:src="@drawable/weight"
+        app:civ_border_color="#ffffff"
+        app:civ_border_width="2dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/layout" />
+
+    <TextView
+        android:id="@+id/textView85"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Blood Pressure"
+        android:textSize="16sp"
+        android:textColor="#ffffff"
+        app:layout_constraintEnd_toEndOf="@+id/measure_1"
+        app:layout_constraintStart_toStartOf="@+id/measure_1"
+        app:layout_constraintTop_toBottomOf="@+id/measure_1" />
+    <TextView
+        android:id="@+id/textView86"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Pulse rate"
+        android:textSize="16sp"
+        android:textColor="#ffffff"
+        app:layout_constraintEnd_toEndOf="@+id/measure_2"
+        app:layout_constraintStart_toStartOf="@+id/measure_2"
+        app:layout_constraintTop_toBottomOf="@+id/measure_2" />
+    <TextView
+        android:id="@+id/textView87"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Height"
+        android:textSize="16sp"
+        android:textColor="#ffffff"
+        app:layout_constraintEnd_toEndOf="@+id/measure_3"
+        app:layout_constraintStart_toStartOf="@+id/measure_3"
+        app:layout_constraintTop_toBottomOf="@+id/measure_3" />
+    <TextView
+        android:id="@+id/textView88"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Sugar level"
+        android:textSize="16sp"
+        android:textColor="#ffffff"
+        app:layout_constraintEnd_toEndOf="@+id/measure_4"
+        app:layout_constraintStart_toStartOf="@+id/measure_4"
+        app:layout_constraintTop_toBottomOf="@+id/measure_4" />
+    <TextView
+        android:id="@+id/textView89"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Weight"
+        android:textSize="16sp"
+        android:textColor="#ffffff"
+        app:layout_constraintEnd_toEndOf="@+id/measure_5"
+        app:layout_constraintStart_toStartOf="@+id/measure_5"
+        app:layout_constraintTop_toBottomOf="@+id/measure_5" />
+
+
+</android.support.constraint.ConstraintLayout>
