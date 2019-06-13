@@ -3,10 +3,12 @@ package com.lenovo.doc;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.icu.text.SimpleDateFormat;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -26,7 +28,10 @@ import com.hsalf.smilerating.SmileRating;
 
 import org.w3c.dom.Text;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 public class rateReview extends AppCompatActivity {
@@ -40,6 +45,9 @@ public class rateReview extends AppCompatActivity {
     int wait=100;
     private EditText review;
     private Button btn;
+    private String formattedDate;
+    private String userName;
+    private String userImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +67,19 @@ public class rateReview extends AppCompatActivity {
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         toolbar.setTitle("Give Feedback");
+
+        firestore.collection("USERS").document(mAuth.getUid()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                userName=documentSnapshot.getString("UserName");
+                userImage=documentSnapshot.getString("image");
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(rateReview.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
 
         smileRating.setOnSmileySelectionListener(new SmileRating.OnSmileySelectionListener() {
             @Override
@@ -95,60 +116,98 @@ public class rateReview extends AppCompatActivity {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                firestore.collection("Doctors").document("India").collection("Guwahati").document(id).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                    @Override
-                    public void onSuccess(DocumentSnapshot documentSnapshot) {
-                        if (documentSnapshot.exists()) {
-                            String z=documentSnapshot.getString("rating");
-                            Long b=(Long)documentSnapshot.get("totalReview");
-                            Long c=(Long) documentSnapshot.get("recomendation");
-                            if(z==null){
-                                z="0";
-                            }
-                            if(b==null){
-                                b= Long.valueOf(0);
-                            }
-                            if(c==null){
-                                c=Long.valueOf(0);
-                            }
-                            b += 1;
-                            if(reco==1){
-                                c += 1;
-                            }
-                            Double a=Double.valueOf(z);
-                            final int rate=smileRating.getRating();
-                            a = ((a*(b-1)) + rate)/(b*1.0) ;
-                            Toast.makeText(rateReview.this, String.valueOf(a), Toast.LENGTH_SHORT).show();
-                            Map<String,Object> data=new HashMap<>();
-                            data.put("rating",a.toString());
-                            data.put("totalReview",b);
-                            data.put("recomendation",c);
-                            firestore.collection("Doctors").document("India").collection("Guwahati").document(id).update(data).addOnSuccessListener(new OnSuccessListener<Void>() {
-                                @Override
-                                public void onSuccess(Void aVoid) {
-                                    startActivity(new Intent(rateReview.this,reviewThanks.class));
-                                    finish();
-                                    yourBooking.fa.finish();
-                                    WelcomeActivity.wel.finish();
+                String rev=review.getText().toString();
+                String rat=String.valueOf(smileRating.getRating());
+                if(!TextUtils.isEmpty(rev) && !TextUtils.isEmpty(rat)){
+                    firestore.collection("Doctors").document("India").collection("Guwahati").document(id).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                        @Override
+                        public void onSuccess(DocumentSnapshot documentSnapshot) {
+                            if (documentSnapshot.exists()) {
+                                String z=documentSnapshot.getString("rating");
+                                Long b=(Long)documentSnapshot.get("totalReview");
+                                Long c=(Long) documentSnapshot.get("recomendation");
+                                if(z==null){
+                                    z="0";
+                                }
+                                if(b==null){
+                                    b= Long.valueOf(0);
+                                }
+                                if(c==null){
+                                    c = Long.valueOf(0);
+                                }
+                                b += 1;
+                                if(reco==1){
+                                    c += 1;
+                                }
+                                Double a=Double.valueOf(z);
+                                final int rate=smileRating.getRating();
+                                a = ((a*(b-1)) + rate)/(b*1.0) ;
+                                Toast.makeText(rateReview.this, String.valueOf(a), Toast.LENGTH_SHORT).show();
+                                Map<String,Object> data=new HashMap<>();
+                                data.put("rating",a.toString());
+                                data.put("totalReview",b);
+                                data.put("recomendation",c);
+                                firestore.collection("Doctors").document("India").collection("Guwahati").document(id).update(data).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
 
+                                    }
+                                }).addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Toast.makeText(rateReview.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                                //String date = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
+                                Date d = Calendar.getInstance().getTime();
+                                //System.out.println("Current time => " + c);
+
+                                SimpleDateFormat df = null;
+                                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+                                    df = new SimpleDateFormat("dd-MMM-yyyy");
+                                    formattedDate = df.format(d);
                                 }
-                            }).addOnFailureListener(new OnFailureListener() {
-                                @Override
-                                public void onFailure(@NonNull Exception e) {
-                                    Toast.makeText(rateReview.this, e.getMessage(), Toast.LENGTH_SHORT).show();
-                                }
-                            });
-                        } else {
-                            Toast.makeText(rateReview.this, "document not exist", Toast.LENGTH_SHORT).show();
+
+                                Map<String,Object> review2=new HashMap<>();
+                                review2.put("Review",review.getText().toString());
+                                review2.put("Rating",String.valueOf(rate));
+                                //review2.put("UserId",mAuth.getUid());
+                                review2.put("Date",formattedDate);
+                                review2.put("userName",userName);
+                                review2.put("userImage",userImage);
+                                firestore.collection("Doctors").document("India").collection("Guwahati").document(id).collection("Review").document(mAuth.getUid()).set(review2).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+                                        startActivity(new Intent(rateReview.this,reviewThanks.class));
+                                        finish();
+                                        yourBooking.fa.finish();
+                                        WelcomeActivity.wel.finish();
+
+                                    }
+                                }).addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Toast.makeText(rateReview.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+
+                                    }
+                                });
+                            } else {
+                                Toast.makeText(rateReview.this, "document not exist", Toast.LENGTH_SHORT).show();
+                            }
                         }
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(rateReview.this, e.getMessage().toString(), Toast.LENGTH_SHORT).show();
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(rateReview.this, e.getMessage().toString(), Toast.LENGTH_SHORT).show();
 
-                    }
-                });
+                        }
+                    });
+
+                }
+                else{
+                    Toast.makeText(rateReview.this, "All fields are mendatory", Toast.LENGTH_SHORT).show();
+                }
+
             }
         });
         //Toast.makeText(this, level, Toast.LENGTH_SHORT).show();

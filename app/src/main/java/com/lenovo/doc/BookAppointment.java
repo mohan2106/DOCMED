@@ -1,8 +1,10 @@
 package com.lenovo.doc;
 
 import android.app.Activity;
+import android.app.ActivityOptions;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -48,6 +50,7 @@ public class BookAppointment extends AppCompatActivity {
     private LatLng loc=null;
     private ProgressDialog bar;
     private Button sel_city,category;
+    public static Activity act;
     private FirebaseFirestore firebaseFirestore;
 
     @Override
@@ -62,6 +65,7 @@ public class BookAppointment extends AppCompatActivity {
         city_view=(TextView)findViewById(R.id.city_view);
         bar=new ProgressDialog(this);
         locality=(LinearLayout)findViewById(R.id.locality);
+        act=this;
         locality_view=(TextView)findViewById(R.id.locality_view);
         category=(Button)findViewById(R.id.category);
         setSupportActionBar(toolbar);
@@ -162,7 +166,13 @@ public class BookAppointment extends AppCompatActivity {
                 intent.putExtra("cityName",City);
                 intent.putExtra("city",cityList);
                 intent.putExtra("flag","0");
-                startActivity(intent);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(BookAppointment.this).toBundle());
+                }
+                else{
+                    startActivity(intent);
+                }
+
                 //startActivity(new Intent(BookAppointment.this,searchActivity.class));
             }
         });
@@ -175,7 +185,12 @@ public class BookAppointment extends AppCompatActivity {
                 intent.putExtra("cityName",City);
                 intent.putExtra("city",localityList);
                 intent.putExtra("flag","1");
-                startActivity(intent);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(BookAppointment.this).toBundle());
+                }
+                else{
+                    startActivity(intent);
+                }
             }
         });
         bar.setMessage("Loding doctors in "+City+"...");

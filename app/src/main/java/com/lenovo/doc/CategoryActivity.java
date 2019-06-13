@@ -1,8 +1,10 @@
 package com.lenovo.doc;
 
 import android.app.Activity;
+import android.app.ActivityOptions;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -48,6 +50,8 @@ public class CategoryActivity extends AppCompatActivity {
         //local=intent.getStringExtra("local");
         editText=(EditText)findViewById(R.id.search_text);
         dialog=new ProgressDialog(this);
+        //dialog.setMessage("Loading category...");
+        //dialog.show();
         gen_phy=(Button)findViewById(R.id.general_phy);
         all_doc=(Button)findViewById(R.id.all_doc);
         gen_phy.setOnClickListener(new View.OnClickListener() {
@@ -58,7 +62,12 @@ public class CategoryActivity extends AppCompatActivity {
                 intent.putExtra("city_name",city);
                 intent.putExtra("local",local);
                 intent.putExtra("category","General");
-                startActivity(intent);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(CategoryActivity.this).toBundle());
+                }
+                else{
+                    startActivity(intent);
+                }
             }
         });
         all_doc.setOnClickListener(new View.OnClickListener() {
@@ -69,7 +78,12 @@ public class CategoryActivity extends AppCompatActivity {
                 intent.putExtra("city_name",city);
                 intent.putExtra("local",local);
                 intent.putExtra("category","All Doctors");
-                startActivity(intent);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(CategoryActivity.this).toBundle());
+                }
+                else{
+                    startActivity(intent);
+                }
             }
         });
         //firebaseFirestore=FirebaseFirestore.getInstance();
@@ -115,8 +129,8 @@ public class CategoryActivity extends AppCompatActivity {
     }
     private void createExampleList(){
         itemList = new ArrayList<>();
-        //dialog.setMessage("Loading Category");
-        //dialog.show();
+        dialog.setMessage("Loading Category");
+        dialog.show();
         //Toast.makeText(this, "in category example funstion", Toast.LENGTH_SHORT).show();
         firebaseFirestore=FirebaseFirestore.getInstance();
         firebaseFirestore.collection("DoctorsCategory").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -132,7 +146,7 @@ public class CategoryActivity extends AppCompatActivity {
                     String error=task.getException().getMessage();
                     Toast.makeText(CategoryActivity.this, error, Toast.LENGTH_SHORT).show();
                 }
-                //   dialog.dismiss();
+                dialog.dismiss();
             }
         });
 

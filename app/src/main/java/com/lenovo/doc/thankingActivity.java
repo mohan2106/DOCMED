@@ -1,6 +1,9 @@
 package com.lenovo.doc;
 
+import android.app.Activity;
+import android.app.ActivityOptions;
 import android.content.Intent;
+import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -17,7 +20,14 @@ public class thankingActivity extends AppCompatActivity {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(thankingActivity.this,WelcomeActivity.class));
+                Intent intent=new Intent(thankingActivity.this,WelcomeActivity.class);
+                ((Activity)WelcomeActivity.wel).finish();
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(thankingActivity.this).toBundle());
+                }
+                else{
+                    startActivity(intent);
+                }
                 finish();
             }
         });

@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:gravity="center"
     android:orientation="vertical"
-    android:background="@drawable/background_gradient"
+    android:background="@drawable/profile_back_gradient"
     tools:context=".MainActivity">
 
     <ImageView

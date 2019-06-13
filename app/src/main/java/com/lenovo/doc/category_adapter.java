@@ -1,7 +1,10 @@
 package com.lenovo.doc;
 
+import android.app.Activity;
+import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -52,7 +55,13 @@ public class category_adapter extends RecyclerView.Adapter<category_adapter.VIEW
                 intent.putExtra("city_name",city);
                 intent.putExtra("local",local);
                 intent.putExtra("category",name);
-                context.startActivity(intent);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    context.startActivity(intent, ActivityOptions.makeSceneTransitionAnimation((Activity)CategoryActivity.category_activity).toBundle());
+                }
+                else{
+                    context.startActivity(intent);
+                }
+
             }
         });
     }
