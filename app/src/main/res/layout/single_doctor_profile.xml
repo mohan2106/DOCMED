@@ -1,43 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:elevation="4sp"
+    android:layout_height="wrap_content"
     android:background="#ffffff"
-    android:layout_marginTop="5sp"
-    app:layout_goneMarginBottom="5sp"
-    android:layout_height="wrap_content">
+    android:elevation="4sp">
 
-    <ImageView
+    <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/doctor_image"
         android:layout_width="80dp"
         android:layout_height="100dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:layout_marginBottom="16dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:src="@drawable/doctor_circular_logo"
+        app:civ_border_color="@color/colorYellow"
+        app:civ_border_width="2dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_action_profile_image" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/doctor_name"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
         android:text="Name"
         android:textSize="18sp"
+        app:layout_constraintEnd_toStartOf="@+id/doctor_map"
         app:layout_constraintStart_toEndOf="@+id/doctor_image"
         app:layout_constraintTop_toTopOf="@+id/doctor_image" />
 
     <TextView
         android:id="@+id/doctor_speciality"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
         android:text="Speciality"
+        app:layout_constraintEnd_toStartOf="@+id/doctor_location"
         app:layout_constraintStart_toEndOf="@+id/doctor_image"
         app:layout_constraintTop_toBottomOf="@+id/doctor_name" />
 
@@ -55,9 +56,10 @@
         android:layout_width="wrap_content"
         android:layout_height="40sp"
         android:layout_marginEnd="16dp"
-        android:background="@drawable/gradient_color_background"
-        android:textColor="#ffffff"
+        android:background="@drawable/button_corner"
+        android:backgroundTint="@color/colorBlack"
         android:text="Consult"
+        android:textColor="@color/colorBlack"
         app:layout_constraintBottom_toBottomOf="@+id/doctor_image"
         app:layout_constraintEnd_toEndOf="parent" />
 
@@ -67,36 +69,30 @@
         android:layout_height="20sp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
+        android:src="@drawable/google_maps_icon"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:src="@drawable/google_maps_icon" />
-
-    <TextView
-        android:id="@+id/textView12"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:text="View Location"
-        app:layout_constraintBottom_toBottomOf="@+id/doctor_map"
-        app:layout_constraintEnd_toStartOf="@+id/doctor_map"
-        app:layout_constraintTop_toTopOf="@+id/doctor_map" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/doctor_fee"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="8dp"
         android:text="Fee"
-        android:textSize="20sp"
         android:textColor="#245def"
-        app:layout_constraintBottom_toBottomOf="@+id/doctor_image"
-        app:layout_constraintStart_toEndOf="@+id/doctor_image" />
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout8"
+        app:layout_constraintStart_toEndOf="@+id/doctor_image"
+        app:layout_constraintTop_toBottomOf="@+id/ratingBar" />
 
     <TextView
         android:id="@+id/doctor_location"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
+        android:textSize="12sp"
         android:layout_marginBottom="8dp"
         android:text="Address"
         app:layout_constraintBottom_toTopOf="@+id/doctor_consult"
@@ -104,13 +100,12 @@
 
     <RatingBar
         android:id="@+id/ratingBar"
+        style="@style/Base.Widget.AppCompat.RatingBar.Small"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/doctor_fee"
-        style="@style/Base.Widget.AppCompat.RatingBar.Small"
-        android:rating="4.5"
         android:progressTint="#d6962f"
+        android:rating="4.5"
         app:layout_constraintStart_toEndOf="@+id/doctor_image"
         app:layout_constraintTop_toBottomOf="@+id/doctor_experience" />
 
@@ -123,4 +118,28 @@
         app:layout_constraintBottom_toBottomOf="@+id/ratingBar"
         app:layout_constraintStart_toEndOf="@+id/ratingBar"
         app:layout_constraintTop_toTopOf="@+id/ratingBar" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout8"
+        android:layout_width="0dp"
+        android:layout_height="10dp"
+        android:layout_marginTop="8dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/single_date">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="@color/colorYellow"></LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="@color/colorPrimary"></LinearLayout>
+    </LinearLayout>
 </android.support.constraint.ConstraintLayout>

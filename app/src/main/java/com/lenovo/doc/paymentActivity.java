@@ -1,12 +1,16 @@
 package com.lenovo.doc;
 
 import android.app.Activity;
+import android.app.ActivityOptions;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -29,6 +33,8 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import java.util.HashMap;
 import java.util.Map;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class paymentActivity extends AppCompatActivity {
     private String name;
     private String fee;
@@ -45,10 +51,10 @@ public class paymentActivity extends AppCompatActivity {
     private TextView tvname, tvfee, tvaddress, tvdate, tvtime, tvspeciality;
     private Button confirm_btn;
     private String bookingCount;
-    private ImageView img;
+    private CircleImageView img;
     private EditText pat_name, pat_email, pat_contact;
-    private LinearLayout pay_at_counter;
-    private ImageView pay_online;
+    private Button pay_at_counter;
+    private Button pay_online;
     private FirebaseAuth mAuth;
     private FirebaseFirestore firestore;
 
@@ -63,9 +69,10 @@ public class paymentActivity extends AppCompatActivity {
         address = i.getStringExtra("address");
         image = i.getStringExtra("image");
         speciality = i.getStringExtra("speciality");
-        day = i.getStringExtra("day");
-        month = i.getStringExtra("month");
-        year = i.getStringExtra("year");
+        //day = i.getStringExtra("day");
+        //month = i.getStringExtra("month");
+        //year = i.getStringExtra("year");
+        final String date=i.getStringExtra("date");
         time = i.getStringExtra("time");
         final String lat=i.getStringExtra("lat");
         final String lng=i.getStringExtra("long");
@@ -78,23 +85,23 @@ public class paymentActivity extends AppCompatActivity {
             initial+=12;
         }
         initial = initial*100;
-        String[] parts2=parts[1].split("-");
+        String[] parts2=parts[1].split(" ");
         initial += Integer.parseInt(parts2[0]);
         final int data=initial;
         dialog = new ProgressDialog(this);
-        pay_at_counter=(LinearLayout)findViewById(R.id.pay_at_counter);
-        pay_online=(ImageView)findViewById(R.id.pay_online);
+        pay_at_counter=findViewById(R.id.pay_at_counter);
+        pay_online=findViewById(R.id.pay_online);
         mAuth = FirebaseAuth.getInstance();
         firestore = FirebaseFirestore.getInstance();
         tvname = (TextView) findViewById(R.id.name);
-        on=(TextView)findViewById(R.id.orderNo);
+        //on=(TextView)findViewById(R.id.orderNo);
         tvaddress = (TextView) findViewById(R.id.address);
         tvdate = (TextView) findViewById(R.id.date);
         tvtime = (TextView) findViewById(R.id.time);
         tvfee = (TextView) findViewById(R.id.fee);
         tvspeciality = (TextView) findViewById(R.id.speciality);
         confirm_btn = (Button) findViewById(R.id.confirm_btn);
-        img = (ImageView) findViewById(R.id.image);
+        img = (CircleImageView) findViewById(R.id.image);
         pat_name = (EditText) findViewById(R.id.name_patients);
         pat_email = (EditText) findViewById(R.id.email_patients);
         pat_contact = (EditText) findViewById(R.id.phone_patients);
@@ -103,10 +110,16 @@ public class paymentActivity extends AppCompatActivity {
                 .into(img);
         tvname.setText(name);
         tvspeciality.setText(speciality);
-        tvdate.setText(day + "/" + month + "/" + year);
+        tvdate.setText(date);
         tvaddress.setText(address);
         tvfee.setText(fee + "/-");
         tvtime.setText(time);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        toolbar.setTitle("confirm Your Booking");
         //final String[] DocName = new String[1];
 
 
@@ -133,7 +146,12 @@ public class paymentActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 Intent intent=new Intent(paymentActivity.this,payment_gateway.class);
-                startActivity(intent);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(paymentActivity.this).toBundle());
+                }
+                else{
+                    startActivity(intent);
+                }
             }
         });
         pay_at_counter.setOnClickListener(new View.OnClickListener() {
@@ -155,7 +173,7 @@ public class paymentActivity extends AppCompatActivity {
                                 Drdata.put("DrFee",fee);
                                 Drdata.put("DrAddress",address);
                                 Drdata.put("DrImage",image);
-                                Drdata.put("Date",day+"/"+month+"/"+year);
+                                Drdata.put("Date",date);
                                 Drdata.put("Time",time);
                                 Drdata.put("Status","1");
                                 Drdata.put("BookingId", DocName);
@@ -168,10 +186,17 @@ public class paymentActivity extends AppCompatActivity {
                                     @Override
                                     public void onSuccess(Void aVoid) {
                                         Toast.makeText(paymentActivity.this, "Request Received", Toast.LENGTH_SHORT).show();
-                                        startActivity(new Intent(paymentActivity.this,thankingActivity.class));
+                                        Intent intent2=new Intent(paymentActivity.this,thankingActivity.class);
+                                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                                            startActivity(intent2, ActivityOptions.makeSceneTransitionAnimation(paymentActivity.this).toBundle());
+                                        }
+                                        else{
+                                            startActivity(intent2);
+                                        }
                                         CategoryActivity.category_activity.finish();
                                         BookAppointment.book_appointment.finish();
                                         Doctor_profile.doctor_profile.finish();
+                                        BookingDateAndTime.dat.finish();
                                         finish();
                                         dialog.dismiss();
                                     }
@@ -195,7 +220,7 @@ public class paymentActivity extends AppCompatActivity {
                 data_dr.put("description",pat_name.getText().toString());
                 data_dr.put("time",time);
                 Toast.makeText(paymentActivity.this, String.valueOf(data), Toast.LENGTH_SHORT).show();
-                firestore.collection("Doctors").document("India").collection("Guwahati").document(id).collection(day+"-"+month+"-"+year).document(mAuth.getUid()).set(data_dr).addOnSuccessListener(new OnSuccessListener<Void>() {
+                firestore.collection("Doctors").document("India").collection("Guwahati").document(id).collection(date).document(mAuth.getUid()).set(data_dr).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
 
@@ -246,5 +271,14 @@ public class paymentActivity extends AppCompatActivity {
             return 0;
         }
         return 1;
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id=item.getItemId();
+        if(id==android.R.id.home){
+            finish();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

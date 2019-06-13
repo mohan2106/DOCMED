@@ -1,9 +1,12 @@
 package com.lenovo.doc;
 
+import android.app.Activity;
+import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.ColorSpace;
 import android.net.Uri;
+import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -19,6 +22,8 @@ import com.google.firebase.firestore.GeoPoint;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class doctor_adapter extends RecyclerView.Adapter<doctor_adapter.ViewHolder> {
     private List<doctor_details_class> itemList;
@@ -71,7 +76,12 @@ public class doctor_adapter extends RecyclerView.Adapter<doctor_adapter.ViewHold
                 intent.putExtra("long",String.valueOf(loc.getLongitude()));
                 intent.putExtra("id",id);
                 //intent.putExtra("location",model);
-                context.startActivity(intent);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    context.startActivity(intent, ActivityOptions.makeSceneTransitionAnimation((Activity)BookAppointment.act).toBundle());
+                }
+                else{
+                    context.startActivity(intent);
+                }
             }
         });
         final String nm=ne.getName();
@@ -85,6 +95,28 @@ public class doctor_adapter extends RecyclerView.Adapter<doctor_adapter.ViewHold
                 context.startActivity(intent);
             }
         });
+        viewHolder.image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(context,Doctor_profile.class);
+                intent.putExtra("name",name);
+                intent.putExtra("fee",fee);
+                intent.putExtra("address",address);
+                intent.putExtra("experience",experience);
+                intent.putExtra("speciality",Speciality);
+                intent.putExtra("image",image);
+                intent.putExtra("lat",String.valueOf(loc.getLatitude()));
+                intent.putExtra("long",String.valueOf(loc.getLongitude()));
+                intent.putExtra("id",id);
+                //intent.putExtra("location",model);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    context.startActivity(intent, ActivityOptions.makeSceneTransitionAnimation((Activity)BookAppointment.act).toBundle());
+                }
+                else{
+                    context.startActivity(intent);
+                }
+            }
+        });
     }
 
     @Override
@@ -93,13 +125,13 @@ public class doctor_adapter extends RecyclerView.Adapter<doctor_adapter.ViewHold
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        private ImageView image;
+        private CircleImageView image;
         private TextView name,speciality,experience,address,fee;
         private Button consult_btn;
         private ImageView location;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            image=(ImageView)itemView.findViewById(R.id.doctor_image);
+            image=(CircleImageView)itemView.findViewById(R.id.doctor_image);
             name=(TextView)itemView.findViewById(R.id.doctor_name);
             speciality=(TextView)itemView.findViewById(R.id.doctor_speciality);
             experience=(TextView)itemView.findViewById(R.id.doctor_experience);

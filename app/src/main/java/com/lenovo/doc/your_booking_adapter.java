@@ -86,11 +86,13 @@ public class your_booking_adapter extends RecyclerView.Adapter<your_booking_adap
         final String date=ne.getDate();
         final String time=ne.getTime();
         final String bookingId=ne.getBookingId();
+        final String id=ne.getId();
         viewModel.manage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent=new Intent(context,reshedule_activity.class);
                 intent.putExtra("bookingId",bookingId);
+                intent.putExtra("id",id);
                 context.startActivity(intent);
             }
         });
@@ -143,7 +145,6 @@ public class your_booking_adapter extends RecyclerView.Adapter<your_booking_adap
                 alertDialog.show();
             }
         });
-        final String id=ne.getId();
         viewModel.rate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

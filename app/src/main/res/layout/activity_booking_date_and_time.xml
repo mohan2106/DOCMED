@@ -3,10 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:orientation="vertical"
     android:layout_height="match_parent"
-    tools:context=".reshedule_activity">
-
+    tools:context=".BookingDateAndTime">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/layout"
@@ -111,8 +109,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:backgroundTint="#ffffff"
-            android:text="Confirm Reshedule"
-            android:textSize="18sp"
+            android:text="Continue"
             android:textColor="#ffffff"
             android:background="@drawable/button_corner"/>
 
@@ -138,7 +135,7 @@
             android:padding="5dp">
 
             <android.support.v7.widget.RecyclerView
-                android:id="@+id/confirm_shedule"
+                android:id="@+id/single_time_recycler"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"></android.support.v7.widget.RecyclerView>
 

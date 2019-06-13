@@ -87,6 +87,7 @@ public class Signup_new_Activity extends AppCompatActivity {
                     else {
 
                         sendCode(view);
+                        Toast.makeText(Signup_new_Activity.this, "Code is sended", Toast.LENGTH_SHORT).show();
                     }
                 } catch (InterruptedException e) {
                     e.printStackTrace();

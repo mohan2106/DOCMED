@@ -1,43 +1,60 @@
 package com.lenovo.doc;
 
 import android.app.Activity;
+import android.app.ActivityOptions;
 import android.app.DatePickerDialog;
-import android.app.TimePickerDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
+import android.os.Build;
+import android.support.annotation.NonNull;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RatingBar;
 import android.widget.TextView;
-import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.GeoPoint;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import devs.mulham.horizontalcalendar.HorizontalCalendar;
+import devs.mulham.horizontalcalendar.HorizontalCalendarListener;
 
 public class Doctor_profile extends AppCompatActivity {
     private DatePickerDialog.OnDateSetListener mDateSetListener;
     private RecyclerView recyclerView;
     private RecyclerView.Adapter adapter;
+    private RecyclerView reviewRecycler;
+    private reviewAdapter review_adapter;
+    private List<review_model> review_list;
     private Button date;
     private TextView pr_name,special,addr,exper,fee;
     private Calendar c;
@@ -52,25 +69,69 @@ public class Doctor_profile extends AppCompatActivity {
     private Button cont_btn;
     private String d,m,y;
     private int flag=99;
+    private LinearLayout lay;
     private TextView date_view;
+    private ConstraintLayout v;
     //private List<time_model> itemList;
     private CircleImageView img;
     private FirebaseFirestore firestore=FirebaseFirestore.getInstance();
     private FirebaseAuth mAuth = FirebaseAuth.getInstance();
+    //private HorizontalCalendar horizontalCalendar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_doctor_profile);
+        Intent i=getIntent();
+        final String name=i.getStringExtra("name");
+        final String fee=i.getStringExtra("fee");
+        String experience=i.getStringExtra("experience");
+        final String address=i.getStringExtra("address");
+        final String speciality=i.getStringExtra("speciality");
+        final String image=i.getStringExtra("image");
+        final String lat=i.getStringExtra("lat");
+        final String lng=i.getStringExtra("long");
+        final String id=i.getStringExtra("id");
         call_for_detail=(LinearLayout)findViewById(R.id.call_for_details);
         doctor_profile=this;
+        v=findViewById(R.id.view_review);
+        //v.getViewTreeObserver()
+          //      .addOnGlobalLayoutListener(new OnViewGlobalLayoutListener(v));
         pr_name=(TextView)findViewById(R.id.profile_name);
+        lay=findViewById(R.id.no_review_layout);
         special=(TextView)findViewById(R.id.profile_category);
         addr=(TextView)findViewById(R.id.profile_address);
         exper=(TextView)findViewById(R.id.profile_experience);
         img=(CircleImageView)findViewById(R.id.circleImageView);
         mapImg=(ImageView)findViewById(R.id.profile_map);
         time_show=(TextView)findViewById(R.id.time_show);
+        reviewRecycler=(RecyclerView)findViewById(R.id.public_review);
+        reviewRecycler.setHasFixedSize(true);
+        reviewRecycler.setLayoutManager(new LinearLayoutManager(this));
+        review_list=new ArrayList<>();
+        firestore.collection("Doctors").document("India").collection("Guwahati").document(id).collection("Review").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()){
+                    for (DocumentSnapshot snapshot:task.getResult()){
+                        review_list.add(new review_model(snapshot.getString("userName"),snapshot.getString("userImage"),snapshot.getString("Date"),snapshot.getString("Rating"),snapshot.getString("Review")));
+                        review_adapter.notifyDataSetChanged();
+                    }
+                    if(review_list.size() == 0){
+                        lay.setVisibility(View.VISIBLE);
+                    }
+                    else{
+                        lay.setVisibility(View.GONE);
+                    }
+                }
+                else{
+                    Toast.makeText(Doctor_profile.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+        review_adapter=new reviewAdapter(review_list,this);
+        reviewRecycler.setAdapter(review_adapter);
+
         cont_btn=(Button)findViewById(R.id.continue_btn);
         btnList=new ArrayList<>();
         btnList.add((Button)findViewById(R.id.button));
@@ -97,10 +158,10 @@ public class Doctor_profile extends AppCompatActivity {
         btnList.add((Button)findViewById(R.id.button22));
         btnList.add((Button)findViewById(R.id.button23));
         btnList.add((Button)findViewById(R.id.button24));
-        for(int i=0;i<24;i++){
+        for(int j=0;j<24;j++){
             //x=i;
-            final int temp=i;
-            btnList.get(i).setOnClickListener(new View.OnClickListener() {
+            final int temp=j;
+            btnList.get(j).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     x=temp;
@@ -123,16 +184,7 @@ public class Doctor_profile extends AppCompatActivity {
             });
         }
 
-        Intent i=getIntent();
-        final String name=i.getStringExtra("name");
-        final String fee=i.getStringExtra("fee");
-        String experience=i.getStringExtra("experience");
-        final String address=i.getStringExtra("address");
-        final String speciality=i.getStringExtra("speciality");
-        final String image=i.getStringExtra("image");
-        final String lat=i.getStringExtra("lat");
-        final String lng=i.getStringExtra("long");
-        final String id=i.getStringExtra("id");
+
         //final GeoPoint loc=i.getParcelableExtra("location");
         Glide.with(this)
                 .load(image)
@@ -196,7 +248,12 @@ public class Doctor_profile extends AppCompatActivity {
                 intent=new Intent(Intent.ACTION_VIEW);
                 intent.setData(Uri.parse("geo:"+lat+","+lng+"?q="+lat+","+lng+"("+name+")&iwloc=A&hl=es"));
                 chooser=Intent.createChooser(intent,"Launch Maps");
-                startActivity(intent);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(Doctor_profile.this).toBundle());
+                }
+                else{
+                    startActivity(intent);
+                }
             }
         });
         //final com.lenovo.doc.Model model=new com.lenovo.doc.Model();
@@ -204,27 +261,32 @@ public class Doctor_profile extends AppCompatActivity {
         cont_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(x<24 && d!=null){
-                    Intent intent=new Intent(Doctor_profile.this,paymentActivity.class);
+                //if(x<24 && d!=null){
+                    Intent intent=new Intent(Doctor_profile.this,BookingDateAndTime.class);
                     intent.putExtra("name",name);
                     intent.putExtra("fee",fee);
                     intent.putExtra("address",address);
                     intent.putExtra("image",image);
                     intent.putExtra("speciality",speciality);
-                    intent.putExtra("day",d);
-                    intent.putExtra("month",m);
-                    intent.putExtra("year",y);
+                    //intent.putExtra("day",d);
+                    //intent.putExtra("month",m);
+                    //intent.putExtra("year",y);
                     intent.putExtra("lat",lat);
                     intent.putExtra("count",no[0]);
                     intent.putExtra("long",lng);
-                    intent.putExtra("time",btnList.get(x).getText());
+                    //intent.putExtra("time",btnList.get(x).getText());
                     intent.putExtra("id",id);
                     //intent.putExtra("location",model);
-                    startActivity(intent);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(Doctor_profile.this).toBundle());
                 }
                 else{
-                    Toast.makeText(Doctor_profile.this, "Date and Time must required", Toast.LENGTH_SHORT).show();
+                    startActivity(intent);
                 }
+                /*}
+                else{
+                    Toast.makeText(Doctor_profile.this, "Date and Time must required", Toast.LENGTH_SHORT).show();
+                }*/
 
             }
         });
@@ -235,7 +297,12 @@ public class Doctor_profile extends AppCompatActivity {
                 final String data="tel:"+telNumber;
                 Intent intent=new Intent(Intent.ACTION_DIAL);
                 intent.setData(Uri.parse(data));
-                startActivity(intent);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(Doctor_profile.this).toBundle());
+                }
+                else{
+                    startActivity(intent);
+                }
             }
         });
     }
@@ -247,5 +314,118 @@ public class Doctor_profile extends AppCompatActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+    private class review_model{
+        private String userName,userImage,userDate,userRaing,userReview;
+
+        public review_model(String userName, String userImage, String userDate, String userRaing, String userReview) {
+            this.userName = userName;
+            this.userImage = userImage;
+            this.userDate = userDate;
+            this.userRaing = userRaing;
+            this.userReview = userReview;
+        }
+
+        public String getUserName() {
+            return userName;
+        }
+
+        public void setUserName(String userName) {
+            this.userName = userName;
+        }
+
+        public String getUserImage() {
+            return userImage;
+        }
+
+        public void setUserImage(String userImage) {
+            this.userImage = userImage;
+        }
+
+        public String getUserDate() {
+            return userDate;
+        }
+
+        public void setUserDate(String userDate) {
+            this.userDate = userDate;
+        }
+
+        public String getUserRaing() {
+            return userRaing;
+        }
+
+        public void setUserRaing(String userRaing) {
+            this.userRaing = userRaing;
+        }
+
+        public String getUserReview() {
+            return userReview;
+        }
+
+        public void setUserReview(String userReview) {
+            this.userReview = userReview;
+        }
+    }
+    private class reviewAdapter extends RecyclerView.Adapter<reviewAdapter.ViewHolder>{
+        private List<review_model> itemList;
+        private Context context;
+
+        public reviewAdapter(List<review_model> itemList, Context context) {
+            this.itemList = itemList;
+            this.context = context;
+        }
+
+        @NonNull
+        @Override
+        public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+            View v= LayoutInflater.from(context).inflate(R.layout.single_review_content,viewGroup,false);
+            return new ViewHolder(v);
+        }
+
+        @Override
+        public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
+            review_model ne=itemList.get(i);
+            viewHolder.ratingBar.setRating(Integer.valueOf(ne.getUserRaing()));
+            viewHolder.userReview.setText(ne.getUserReview());
+            viewHolder.userDate.setText(ne.getUserDate());
+            viewHolder.userName.setText(ne.getUserName());
+            viewHolder.userRating.setText(ne.getUserRaing());
+            Glide.with(context).load(ne.getUserImage()).into(viewHolder.userImage);
+        }
+
+        @Override
+        public int getItemCount() {
+            return itemList.size();
+        }
+
+        public class ViewHolder extends RecyclerView.ViewHolder {
+            private ImageView userImage;
+            private TextView userName,userDate,userRating,userReview;
+            private RatingBar ratingBar;
+            public ViewHolder(@NonNull View itemView) {
+                super(itemView);
+                userImage=itemView.findViewById(R.id.review_user_image);
+                userName=itemView.findViewById(R.id.review_user_name);
+                userDate=itemView.findViewById(R.id.review_date);
+                userRating=itemView.findViewById(R.id.review_rating_int);
+                ratingBar=itemView.findViewById(R.id.review_rating);
+                userReview=itemView.findViewById(R.id.review_review);
+
+            }
+        }
+    }
+    private static class OnViewGlobalLayoutListener implements ViewTreeObserver.OnGlobalLayoutListener {
+        private final static int maxHeight = 600;
+        private View view;
+
+        public OnViewGlobalLayoutListener(View view) {
+            this.view = view;
+        }
+
+        @Override
+        public void onGlobalLayout() {
+            if (view.getHeight() > maxHeight)
+                view.getLayoutParams().height = maxHeight;
+        }
     }
 }
