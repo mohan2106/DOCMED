@@ -1,11 +1,15 @@
 package com.lenovo.doc;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -78,6 +82,9 @@ public class Signup_new_Activity extends AppCompatActivity {
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (ContextCompat.checkSelfPermission(Signup_new_Activity.this, Manifest.permission.READ_SMS) != PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions(Signup_new_Activity.this, new String[]{Manifest.permission.READ_SMS, Manifest.permission.RECEIVE_SMS}, 101);
+                }
                 try {
                     if (!isConnected()) {
                         //  Toast.makeText(LoginActivity.this, "Network problem", Toast.LENGTH_SHORT).show();

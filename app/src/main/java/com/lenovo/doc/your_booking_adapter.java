@@ -53,12 +53,24 @@ public class your_booking_adapter extends RecyclerView.Adapter<your_booking_adap
         //Toast.makeText(context, ne.getStatus(), Toast.LENGTH_SHORT).show();
         switch (ne.getStatus()){
             case "1":
+                switch (ne.getPaymentStatus()){
+                    case "0":
+                        viewModel.paymentStatus.setVisibility(View.GONE);
+                        viewModel.paid.setText("Pay at counter");
+                        viewModel.paid.setTextColor(Color.BLACK);
+                        break;
+                    case "1":
+                        viewModel.paymentStatus.setVisibility(View.VISIBLE);
+                        viewModel.paid.setText("Paid");
+                }
                 viewModel.status.setText("Appointment on: "+ne.getDate());
                 viewModel.status.setTextColor(Color.parseColor("#000000"));
                 viewModel.date.setTextColor(Color.parseColor("#000000"));
                 viewModel.time.setTextColor(Color.parseColor("#000000"));
                 break;
             case "0":
+                viewModel.paymentStatus.setVisibility(View.GONE);
+                viewModel.paid.setVisibility(View.GONE);
                 viewModel.status.setText("Cancelled");
                 viewModel.status.setTextColor(Color.parseColor("#f50b0b"));
                 viewModel.date.setTextColor(Color.parseColor("#f50b0b"));
@@ -67,14 +79,31 @@ public class your_booking_adapter extends RecyclerView.Adapter<your_booking_adap
                 viewModel.manage.setVisibility(View.GONE);
                 break;
             case "2":
-                viewModel.status.setText("Meeting Done");
-                viewModel.status.setTextColor(Color.parseColor("#178119"));
-                viewModel.date.setTextColor(Color.parseColor("#178119"));
-                viewModel.time.setTextColor(Color.parseColor("#178119"));
-                viewModel.cancel.setVisibility(View.GONE);
-                viewModel.manage.setVisibility(View.GONE);
-                viewModel.rate.setVisibility(View.VISIBLE);
-                break;
+                viewModel.paymentStatus.setVisibility(View.GONE);
+                viewModel.paid.setVisibility(View.GONE);
+                switch(ne.getRated()){
+                    case "0":
+                        viewModel.status.setText("Meeting Done");
+                        viewModel.status.setTextColor(Color.parseColor("#178119"));
+                        viewModel.date.setTextColor(Color.parseColor("#178119"));
+                        viewModel.time.setTextColor(Color.parseColor("#178119"));
+                        viewModel.cancel.setVisibility(View.GONE);
+                        viewModel.manage.setVisibility(View.GONE);
+                        viewModel.rate.setVisibility(View.VISIBLE);
+                        break;
+                    case "1":
+                        viewModel.status.setText("Meeting Done");
+                        viewModel.status.setTextColor(Color.parseColor("#178119"));
+                        viewModel.date.setTextColor(Color.parseColor("#178119"));
+                        viewModel.time.setTextColor(Color.parseColor("#178119"));
+                        viewModel.cancel.setVisibility(View.GONE);
+                        viewModel.manage.setVisibility(View.GONE);
+                        viewModel.rate.setVisibility(View.GONE);
+                        break;
+                    default:
+                        break;
+                }
+
             default:
                 break;
         }
@@ -178,6 +207,8 @@ public class your_booking_adapter extends RecyclerView.Adapter<your_booking_adap
         private TextView status,name,speciality,address,fee,date,time;
         private TextView manage,cancel;
         private Button rate;
+        private ImageView paymentStatus;
+        private TextView paid;
         public ViewModel(@NonNull View itemView) {
             super(itemView);
             image=(ImageView)itemView.findViewById(R.id.image);
@@ -192,6 +223,8 @@ public class your_booking_adapter extends RecyclerView.Adapter<your_booking_adap
             time=(TextView)itemView.findViewById(R.id.time);
             manage=(TextView)itemView.findViewById(R.id.manageBtn);
             cancel=(TextView)itemView.findViewById(R.id.cancelBtn);
+            paymentStatus=itemView.findViewById(R.id.paymentStatusImage);
+            paid=itemView.findViewById(R.id.paymentStatusText);
 
         }
     }

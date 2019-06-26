@@ -80,10 +80,6 @@ public class BookingDateAndTime extends AppCompatActivity {
         address = i.getStringExtra("address");
         image = i.getStringExtra("image");
         speciality = i.getStringExtra("speciality");
-        //day = i.getStringExtra("day");
-        //month = i.getStringExtra("month");
-        //year = i.getStringExtra("year");
-        //time = i.getStringExtra("time");
         final String lat=i.getStringExtra("lat");
         final String lng=i.getStringExtra("long");
         final String id=i.getStringExtra("id");
@@ -117,10 +113,6 @@ public class BookingDateAndTime extends AppCompatActivity {
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         toolbar.setTitle("Schedule");
-        //Date d = Calendar.getInstance().getTime();
-        //System.out.println("Current time => " + c);
-
-
         Calendar endDate = Calendar.getInstance();
         endDate.add(Calendar.DAY_OF_MONTH, 7);
         Calendar startDate = Calendar.getInstance();

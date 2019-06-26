@@ -211,5 +211,28 @@
             android:background="@color/colorPrimary"></LinearLayout>
     </LinearLayout>
 
+    <ImageView
+        android:id="@+id/paymentStatusImage"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/date"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/ok" />
+
+    <TextView
+        android:id="@+id/paymentStatusText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="4dp"
+        android:layout_marginBottom="8dp"
+        android:text="paid"
+        android:textColor="@color/colorGreen"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/date"
+        app:layout_constraintEnd_toStartOf="@+id/paymentStatusImage"
+        app:layout_constraintTop_toTopOf="@+id/paymentStatusImage" />
+
 
 </android.support.constraint.ConstraintLayout>

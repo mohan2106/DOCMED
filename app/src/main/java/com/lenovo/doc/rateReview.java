@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.icu.text.SimpleDateFormat;
+import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -55,6 +56,7 @@ public class rateReview extends AppCompatActivity {
         setContentView(R.layout.activity_rate_review);
         Intent in=getIntent();
         final String id=in.getStringExtra("id");
+        final String bookingId=in.getStringExtra("bookingId");
         tv1=(TextView)findViewById(R.id.tv1);
         tv2=(TextView)findViewById(R.id.tv2);
         btn=(Button)findViewById(R.id.submit_review);
@@ -67,7 +69,7 @@ public class rateReview extends AppCompatActivity {
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         toolbar.setTitle("Give Feedback");
-
+        Toast.makeText(this, bookingId + id, Toast.LENGTH_SHORT).show();
         firestore.collection("USERS").document(mAuth.getUid()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
@@ -163,32 +165,45 @@ public class rateReview extends AppCompatActivity {
                                 //System.out.println("Current time => " + c);
 
                                 SimpleDateFormat df = null;
-                                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                                     df = new SimpleDateFormat("dd-MMM-yyyy");
                                     formattedDate = df.format(d);
                                 }
 
-                                Map<String,Object> review2=new HashMap<>();
-                                review2.put("Review",review.getText().toString());
-                                review2.put("Rating",String.valueOf(rate));
-                                //review2.put("UserId",mAuth.getUid());
-                                review2.put("Date",formattedDate);
-                                review2.put("userName",userName);
-                                review2.put("userImage",userImage);
-                                firestore.collection("Doctors").document("India").collection("Guwahati").document(id).collection("Review").document(mAuth.getUid()).set(review2).addOnSuccessListener(new OnSuccessListener<Void>() {
+
+                                Map<String,Object> rated=new HashMap<>();
+                                rated.put("rated","1");
+                                firestore.collection("USERS").document(mAuth.getUid()).collection("Appointment").document(String.valueOf(bookingId)).update(rated).addOnSuccessListener(new OnSuccessListener<Void>() {
                                     @Override
                                     public void onSuccess(Void aVoid) {
-                                        startActivity(new Intent(rateReview.this,reviewThanks.class));
-                                        finish();
-                                        yourBooking.fa.finish();
-                                        WelcomeActivity.wel.finish();
+                                        Map<String,Object> review2=new HashMap<>();
+                                        review2.put("Review",review.getText().toString());
+                                        review2.put("Rating",String.valueOf(rate));
+                                        //review2.put("UserId",mAuth.getUid());
+                                        review2.put("Date",formattedDate);
+                                        review2.put("userName",userName);
+                                        review2.put("userImage",userImage);
+                                        firestore.collection("Doctors").document("India").collection("Guwahati").document(id).collection("Review").document(mAuth.getUid()).set(review2).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                            @Override
+                                            public void onSuccess(Void aVoid) {
+                                                startActivity(new Intent(rateReview.this,reviewThanks.class));
+                                                finish();
+                                                yourBooking.fa.finish();
+                                                WelcomeActivity.wel.finish();
 
+                                            }
+                                        }).addOnFailureListener(new OnFailureListener() {
+                                            @Override
+                                            public void onFailure(@NonNull Exception e) {
+                                                Toast.makeText(rateReview.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+
+                                            }
+                                        });
                                     }
                                 }).addOnFailureListener(new OnFailureListener() {
                                     @Override
                                     public void onFailure(@NonNull Exception e) {
                                         Toast.makeText(rateReview.this, e.getMessage(), Toast.LENGTH_SHORT).show();
-
                                     }
                                 });
                             } else {
