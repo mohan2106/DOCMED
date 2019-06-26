@@ -15,9 +15,11 @@ public class your_booking_model {
     private String lat;
     private String lng;
     private String bookingId;
+    private String paymentStatus;
+    private String rated;
     //private GeoPoint location;
 
-    public your_booking_model(String name, String address, String speciality, String fee, String image, String status, String date, String time,String lat,String lng,String bookingId,String id) {
+    public your_booking_model(String name, String address, String speciality, String fee, String image, String status, String date, String time,String lat,String lng,String bookingId,String id,String a,String b) {
         this.name = name;
         this.address = address;
         this.speciality = speciality;
@@ -30,6 +32,8 @@ public class your_booking_model {
         this.lng=lng;
         this.id=id;
         this.bookingId=bookingId;
+        this.paymentStatus=a;
+        this.rated=b;
         //this.location = location;
     }
 
@@ -127,5 +131,21 @@ public class your_booking_model {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getPaymentStatus() {
+        return paymentStatus;
+    }
+
+    public void setPaymentStatus(String paymentStatus) {
+        this.paymentStatus = paymentStatus;
+    }
+
+    public String getRated() {
+        return rated;
+    }
+
+    public void setRated(String rated) {
+        this.rated = rated;
     }
 }
