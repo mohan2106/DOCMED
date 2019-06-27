@@ -179,6 +179,7 @@ public class your_booking_adapter extends RecyclerView.Adapter<your_booking_adap
             public void onClick(View v) {
                 Intent intent=new Intent(context,rateReview.class);
                 intent.putExtra("id",id);
+                intent.putExtra("bookingId",bookingId);
                 context.startActivity(intent);
             }
         });

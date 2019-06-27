@@ -136,7 +136,7 @@ public class SignUpActivity extends AppCompatActivity {
                                 @Override
                                 public void onSuccess(Void aVoid) {
                                     Toast.makeText(SignUpActivity.this, "Registration Successfull", Toast.LENGTH_SHORT).show();
-                                    startActivity(new Intent(SignUpActivity.this,WelcomeActivity.class));
+                                    startActivity(new Intent(SignUpActivity.this,profileActivity.class));
                                     finish();
                                 }
                             }).addOnFailureListener(new OnFailureListener() {
@@ -150,7 +150,7 @@ public class SignUpActivity extends AppCompatActivity {
                         } else {
                             // If sign in fails, display a message to the user.
                             register_btn.setEnabled(true);
-                            Toast.makeText(SignUpActivity.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(SignUpActivity.this, task.getException().getMessage().toString(), Toast.LENGTH_SHORT).show();
 
                         }
 
