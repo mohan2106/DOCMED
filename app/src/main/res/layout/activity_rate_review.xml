@@ -200,6 +200,7 @@
                     android:id="@+id/review_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:gravity="top"
                     android:hint="Add your review"
                     android:lines="5"
                     android:textColorHint="#DB8989"

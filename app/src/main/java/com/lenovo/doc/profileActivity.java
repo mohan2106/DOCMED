@@ -156,7 +156,9 @@ public class profileActivity extends AppCompatActivity implements AdapterView.On
 
                                                 //sendToMAin();
                                                 Toast.makeText(profileActivity.this, "Update successfull", Toast.LENGTH_SHORT).show();
+                                                startActivity(new Intent(profileActivity.this,WelcomeActivity.class));
                                                 pb.setVisibility(View.INVISIBLE);
+                                                finish();
 
                                             }
                                         }).addOnFailureListener(new OnFailureListener() {
