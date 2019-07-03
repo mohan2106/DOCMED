@@ -80,7 +80,7 @@
             android:textSize="16sp"
             android:layout_margin="5sp"
             android:ems="10"
-            android:text="General Physian"
+            android:text="General Physician"
             android:layout_weight="1"/>
         <Button
             android:layout_width="0sp"
