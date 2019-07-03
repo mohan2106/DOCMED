@@ -24,7 +24,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="170sp"
                 android:orientation="horizontal"
-                android:layout_marginBottom="5sp"
+                android:layout_marginBottom="0sp"
                 android:weightSum="2"
                 android:layout_marginLeft="16sp"
                 android:layout_marginRight="16sp"
@@ -62,7 +62,7 @@
                             android:gravity="center"
                             android:textSize="16sp"
                             android:textColor="#000000"
-                            android:textStyle="bold"/>
+                            />
                     </LinearLayout>
                 </android.support.v7.widget.CardView>
                 <android.support.v7.widget.CardView
@@ -98,7 +98,7 @@
                             android:gravity="center"
                             android:textSize="16sp"
                             android:textColor="#000000"
-                            android:textStyle="bold"/>
+                            />
                     </LinearLayout>
                 </android.support.v7.widget.CardView>
                 <android.support.v7.widget.CardView
@@ -133,55 +133,91 @@
                             android:text="Call Us for booking"
                             android:textSize="16sp"
                             android:textColor="#000000"
-                            android:textStyle="bold"/>
+                            />
                     </LinearLayout>
                 </android.support.v7.widget.CardView>
             </LinearLayout>
-            <android.support.v7.widget.CardView
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="120sp"
+                android:layout_height="170sp"
+                android:orientation="horizontal"
+                android:layout_marginBottom="5sp"
+                android:weightSum="2"
                 android:layout_marginLeft="16sp"
                 android:layout_marginRight="16sp"
-                android:layout_marginBottom="5sp"
-                android:layout_marginTop="5sp"
-                android:padding="8sp"
-                app:cardCornerRadius="5sp"
-                android:elevation="4sp"
-                android:background="#ffffff">
-                <LinearLayout
-                    android:id="@+id/health_book"
-                    android:layout_width="match_parent"
+                android:layout_marginTop="0sp"
+                >
+                <android.support.v7.widget.CardView
+                    android:layout_width="0sp"
                     android:layout_height="match_parent"
-                    android:weightSum="5"
-                    android:padding="12sp"
-                    android:orientation="horizontal">
+                    app:cardCornerRadius="5sp"
+                    android:layout_marginTop="5sp"
+                    android:layout_marginBottom="5sp"
+                    app:cardBackgroundColor="#ffffff"
+                    android:layout_weight="1"
+                    android:layout_marginRight="5sp"
+                    android:background="#ffffff"
+                    android:elevation="4sp">
                     <LinearLayout
-                        android:layout_width="0dp"
+                        android:id="@+id/health_book"
+                        android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_weight="3.5"
-                        android:orientation="vertical">
+                        android:padding="5sp"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:weightSum="5">
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="0sp"
+                            android:layout_weight="3"
+                            android:src="@drawable/health_book"/>
                         <TextView
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="HEALTH BOOK"
-                            android:textSize="20sp"
-                            android:layout_marginTop="5sp"
-                            android:layout_marginBottom="5sp"
+                            android:layout_height="0sp"
+                            android:layout_weight="2"
+                            android:text="Health Profile"
+                            android:gravity="center"
+                            android:textSize="16sp"
                             android:textColor="#000000"
-                            android:textStyle="bold"/>
+                            />
+                    </LinearLayout>
+                </android.support.v7.widget.CardView>
+                <android.support.v7.widget.CardView
+                    android:layout_width="0sp"
+                    android:backgroundTint="#ffffff"
+                    android:layout_height="match_parent"
+                    app:cardCornerRadius="5sp"
+                    android:layout_marginTop="5sp"
+                    android:layout_marginBottom="5sp"
+                    android:layout_marginLeft="5sp"
+                    android:layout_weight="1"
+                    android:background="#ffffff"
+                    android:elevation="4sp">
+                    <LinearLayout
+                        android:id="@+id/doctor_at_home"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:padding="5sp"
+                        android:orientation="vertical"
+                        android:gravity="center"
+                        android:weightSum="5">
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="0sp"
+                            android:src="@drawable/doctor_home"
+                            android:layout_weight="3"/>
                         <TextView
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="track your health record, e-prescription and e-report"/>
+                            android:layout_height="0sp"
+                            android:gravity="center"
+                            android:layout_weight="2"
+                            android:text="Call Doctor at home"
+                            android:textSize="16sp"
+                            android:textColor="#000000"
+                            />
                     </LinearLayout>
-                    <ImageView
-                        android:layout_width="0sp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1.5"
-                        android:src="@drawable/health_book"/>
-
-                </LinearLayout>
-            </android.support.v7.widget.CardView>
+                </android.support.v7.widget.CardView>
+            </LinearLayout>
         </LinearLayout>
 
     </ScrollView>

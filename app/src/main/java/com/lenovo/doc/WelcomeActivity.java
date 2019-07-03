@@ -1,19 +1,28 @@
 package com.lenovo.doc;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.ActivityOptions;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.location.Location;
+import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -41,7 +50,8 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class WelcomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener
-                     {
+
+        {
 
     private FirebaseAuth firebaseAuth;
     private FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
@@ -57,20 +67,84 @@ public class WelcomeActivity extends AppCompatActivity
     private FirebaseFirestore firestore=FirebaseFirestore.getInstance();
     //private FirebaseAuth mAuth;
     private FrameLayout frameLayout;
+    private Location location=null;
     public static Activity wel;
+
+    //location city name
+    private TextView addressField; //Add a new TextView to your activity_main to display the address
+    private LocationManager locationManager;
+    private String provider;
+
+    private AppLocationService appLocationService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
         wel=this;
+        appLocationService = new AppLocationService(
+                WelcomeActivity.this);
+
+
         firebaseAuth = FirebaseAuth.getInstance();
+
+        //my location setup
+        addressField = (TextView) findViewById(R.id.my_location);
+        /*Location gpsLocation = appLocationService
+                .getLocation(LocationManager.GPS_PROVIDER);
+        if (gpsLocation != null) {
+            double latitude = gpsLocation.getLatitude();
+            double longitude = gpsLocation.getLongitude();
+            String result = "Latitude: " + gpsLocation.getLatitude() +
+                    " Longitude: " + gpsLocation.getLongitude();
+        } else {
+            showSettingsAlert();
+        }*/
+        location = appLocationService
+                .getLocation(LocationManager.GPS_PROVIDER);
+
+        //you can hard-code the lat & long if you have issues with getting it
+        //remove the below if-condition and use the following couple of lines
+        //double latitude = 37.422005;
+        //double longitude = -122.084095
+
+        /*if (ContextCompat.checkSelfPermission(WelcomeActivity.this, Manifest.permission.READ_SMS) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(WelcomeActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, 101);
+
+            double latitude = location.getLatitude();
+            double longitude = location.getLongitude();
+            LocationAddress locationAddress = new LocationAddress();
+            locationAddress.getAddressFromLocation(latitude, longitude,
+                    getApplicationContext(), new GeocoderHandler());
+        }*/
+
+        if (location != null) {
+            double latitude = location.getLatitude();
+            double longitude = location.getLongitude();
+            LocationAddress locationAddress = new LocationAddress();
+            locationAddress.getAddressFromLocation(latitude, longitude,
+                    getApplicationContext(), new GeocoderHandler());
+        } else {
+            ActivityCompat.requestPermissions(WelcomeActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, 101);
+
+            double latitude = location.getLatitude();
+            double longitude = location.getLongitude();
+            LocationAddress locationAddress = new LocationAddress();
+            locationAddress.getAddressFromLocation(latitude, longitude,
+                    getApplicationContext(), new GeocoderHandler());
+            //showSettingsAlert();
+        }
+
+
+
+        //////address ends here
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         book_appoint=(LinearLayout)findViewById(R.id.book_appointment);
         buy_med=(LinearLayout)findViewById(R.id.buy_medicine);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
-        toolbar.setTitle("DocPlus");
+        toolbar.setTitle("DOCMED");
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         navigationView.getMenu().getItem(0).setChecked(true);
@@ -110,6 +184,46 @@ public class WelcomeActivity extends AppCompatActivity
 
 
 
+    }
+
+    public void showSettingsAlert() {
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(
+                WelcomeActivity.this);
+        alertDialog.setTitle("SETTINGS");
+        alertDialog.setMessage("Enable Location Provider! Go to settings menu?");
+        alertDialog.setPositiveButton("Settings",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        Intent intent = new Intent(
+                                Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                        WelcomeActivity.this.startActivity(intent);
+                    }
+                });
+        alertDialog.setNegativeButton("Cancel",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+        alertDialog.show();
+    }
+
+    private class GeocoderHandler extends Handler {
+        @Override
+        public void handleMessage(Message message) {
+            String locationAddress;
+            switch (message.what) {
+                case 1:
+                    Bundle bundle = message.getData();
+                    locationAddress = bundle.getString("address");
+                    break;
+                default:
+                    locationAddress = null;
+            }
+            String array[]=locationAddress.split("\n");
+            addressField.setText(array[0]+" ("+array[2]+")");
+            //Toast.makeText(WelcomeActivity.this, locationAddress, Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override
@@ -178,9 +292,6 @@ public class WelcomeActivity extends AppCompatActivity
             Intent intent=new Intent(Intent.ACTION_DIAL);
             intent.setData(Uri.parse(data));
             startActivity(intent);
-        }
-        else if(id== R.id.cart){
-            Toast.makeText(this, "We are not active for medicine delivery yet, stay connected we will deliver soon", Toast.LENGTH_SHORT).show();
         }
 
         return super.onOptionsItemSelected(item);

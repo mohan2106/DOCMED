@@ -58,7 +58,7 @@ public class doctor_adapter extends RecyclerView.Adapter<doctor_adapter.ViewHold
         viewHolder.address.setText(ne.getAddress());
         viewHolder.fee.setText("Fee: Rs."+ne.getFee());
         viewHolder.experience.setText(ne.getExperiencce()+" + Years exp");
-        viewHolder.speciality.setText("speciality= "+ne.getSpeciality());
+        viewHolder.speciality.setText(ne.getSpeciality());
         Glide.with(context)
                 .load(ne.getImage())
                 .into(viewHolder.image);

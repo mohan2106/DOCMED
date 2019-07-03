@@ -8,10 +8,5 @@
         app:showAsAction="always"
         android:title="call"
          />
-    <item android:id="@+id/cart"
-        android:orderInCategory="100"
-        android:icon="@drawable/ic_shopping_cart_white"
-        android:title="cart"
-        app:showAsAction="always"/>
 
 </menu>

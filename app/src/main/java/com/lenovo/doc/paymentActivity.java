@@ -70,7 +70,7 @@ public class paymentActivity extends AppCompatActivity {
     private Button confirm_btn;
     private String bookingCount;
     private CircleImageView img;
-    private EditText pat_name, pat_email, pat_contact;
+    private EditText pat_name, pat_email, pat_contact,pat_reason;
     private Button pay_at_counter;
     private Button pay_online;
     private FirebaseAuth mAuth;
@@ -111,6 +111,7 @@ public class paymentActivity extends AppCompatActivity {
         pay_online=findViewById(R.id.pay_online);
         mAuth = FirebaseAuth.getInstance();
         firestore = FirebaseFirestore.getInstance();
+        pat_reason=findViewById(R.id.paymentReason);
         tvname = (TextView) findViewById(R.id.name);
         //on=(TextView)findViewById(R.id.orderNo);
         tvaddress = (TextView) findViewById(R.id.address);
@@ -118,7 +119,7 @@ public class paymentActivity extends AppCompatActivity {
         tvtime = (TextView) findViewById(R.id.time);
         tvfee = (TextView) findViewById(R.id.fee);
         tvspeciality = (TextView) findViewById(R.id.speciality);
-        confirm_btn = (Button) findViewById(R.id.confirm_btn);
+        //confirm_btn = (Button) findViewById(R.id.confirm_btn);
         img = (CircleImageView) findViewById(R.id.image);
         pat_name = (EditText) findViewById(R.id.name_patients);
         pat_email = (EditText) findViewById(R.id.email_patients);
@@ -159,9 +160,11 @@ public class paymentActivity extends AppCompatActivity {
 
             }
         });
+
         pay_online.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 dialog.setMessage("Loading PAYTM payment gateway for you...");
                 dialog.dismiss();
                 if (ContextCompat.checkSelfPermission(paymentActivity.this, Manifest.permission.READ_SMS) != PackageManager.PERMISSION_GRANTED) {
@@ -217,6 +220,11 @@ public class paymentActivity extends AppCompatActivity {
                                                 public void onSuccess(DocumentSnapshot documentSnapshot) {
                                                     if(documentSnapshot.exists()){
                                                         String cn=documentSnapshot.getString("count");
+                                                        String rsn=pat_reason.getText().toString();
+                                                        String patName=pat_name.getText().toString();
+                                                        String patEmail=pat_email.getText().toString();
+                                                        String patMob=pat_contact.getText().toString();
+
                                                         final String DocName=String.valueOf(Integer.parseInt(cn)+1);
                                                         firestore.collection("BookingCount").document("India").update("count", DocName);
                                                         if(checkFielsd()>0){
@@ -235,6 +243,7 @@ public class paymentActivity extends AppCompatActivity {
                                                             Drdata.put("lat",lat);
                                                             Drdata.put("long",lng);
                                                             Drdata.put("id",id);
+                                                            Drdata.put("reason",rsn);
                                                             //Drdata.put("latitude",String.valueOf(loc.getLatitude()));
                                                             //Drdata.put("longitude",String.valueOf(loc.getLongitude()));
                                                             firestore.collection("USERS").document(mAuth.getUid()).collection("Appointment").document(DocName).set(Drdata).addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -268,6 +277,11 @@ public class paymentActivity extends AppCompatActivity {
                                                             //Map<Object,String> strData=new HashMap<>();
                                                             data_dr.put("description",pat_name.getText().toString());
                                                             data_dr.put("time",time);
+                                                            data_dr.put("consumerId",mAuth.getUid());
+                                                            data_dr.put("reason",rsn);
+                                                            data_dr.put("patientName",patName);
+                                                            data_dr.put("patientEmail",patEmail);
+                                                            data_dr.put("patientMobile",patMob);
                                                             Toast.makeText(paymentActivity.this, String.valueOf(data), Toast.LENGTH_SHORT).show();
                                                             firestore.collection("Doctors").document("India").collection("Guwahati").document(id).collection(date).document(DocName).set(data_dr).addOnSuccessListener(new OnSuccessListener<Void>() {
                                                                 @Override
@@ -364,6 +378,10 @@ public class paymentActivity extends AppCompatActivity {
                 firestore.collection("BookingCount").document("India").get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                     @Override
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        String rsn=pat_reason.getText().toString();
+                        String patName=pat_name.getText().toString();
+                        String patEmail=pat_email.getText().toString();
+                        String patMob=pat_contact.getText().toString();
                         if(documentSnapshot.exists()){
                             String cn=documentSnapshot.getString("count");
                             final String DocName=String.valueOf(Integer.parseInt(cn)+1);
@@ -384,6 +402,7 @@ public class paymentActivity extends AppCompatActivity {
                                 Drdata.put("lat",lat);
                                 Drdata.put("long",lng);
                                 Drdata.put("id",id);
+                                Drdata.put("reason",rsn);
                                 //Drdata.put("latitude",String.valueOf(loc.getLatitude()));
                                 //Drdata.put("longitude",String.valueOf(loc.getLongitude()));
                                 firestore.collection("USERS").document(mAuth.getUid()).collection("Appointment").document(DocName).set(Drdata).addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -417,6 +436,11 @@ public class paymentActivity extends AppCompatActivity {
                                 //Map<Object,String> strData=new HashMap<>();
                                 data_dr.put("description",pat_name.getText().toString());
                                 data_dr.put("time",time);
+                                data_dr.put("consumerId",mAuth.getUid());
+                                data_dr.put("reason",rsn);
+                                data_dr.put("patientName",patName);
+                                data_dr.put("patientEmail",patEmail);
+                                data_dr.put("patientMobile",patMob);
                                 Toast.makeText(paymentActivity.this, String.valueOf(data), Toast.LENGTH_SHORT).show();
                                 firestore.collection("Doctors").document("India").collection("Guwahati").document(id).collection(date).document(DocName).set(data_dr).addOnSuccessListener(new OnSuccessListener<Void>() {
                                     @Override

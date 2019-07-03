@@ -27,11 +27,15 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import static java.lang.Integer.parseInt;
 
 public class BloodPressureActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
@@ -48,6 +52,7 @@ public class BloodPressureActivity extends AppCompatActivity {
     private LinearLayout add_prep_text;
     private ConstraintLayout add_prep_layout;
     private Button pb_cancel,pb_save;
+    private Map<String,Integer> mon=new HashMap<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,6 +85,18 @@ public class BloodPressureActivity extends AppCompatActivity {
                 recyclerView.setVisibility(View.VISIBLE);
             }
         });
+        mon.put("jan",1);
+        mon.put("fab",2);
+        mon.put("mar",3);
+        mon.put("apr",4);
+        mon.put("may",5);
+        mon.put("jun",6);
+        mon.put("jly",7);
+        mon.put("aug",8);
+        mon.put("sep",9);
+        mon.put("oct",10);
+        mon.put("nov",11);
+        mon.put("dec",12);
         pb=new ProgressDialog(this);
         itemList=new ArrayList<>();
         recyclerView=(RecyclerView)findViewById(R.id.all_blood_pressure_recycler);
@@ -123,8 +140,15 @@ public class BloodPressureActivity extends AppCompatActivity {
                         y=String.valueOf(year);
                     }
                 },day,month,year);
+                Date x=c.getTime();
+
                 DatePicker dp = dbg.getDatePicker();
+                SimpleDateFormat df = new SimpleDateFormat("dd-MMM-yyyy");
+                String formattedDate = df.format(x);
+                String array[] = String.valueOf(formattedDate).split("-");
+                //Toast.makeText(BloodPressureActivity.this, , Toast.LENGTH_SHORT).show();
                 dp.setMaxDate(c.getTimeInMillis());
+                //dp.updateDate(parseInt(array[2]),mon.get(array[1]),parseInt(array[0]));
                 dbg.show();
 
             }
@@ -174,6 +198,7 @@ public class BloodPressureActivity extends AppCompatActivity {
 
 
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id=item.getItemId();

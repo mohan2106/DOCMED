@@ -222,31 +222,48 @@
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="8dp"
                     android:layout_marginEnd="16dp"
-                    android:layout_marginBottom="8dp"
                     android:drawableRight="@drawable/ic_phone"
                     android:drawableTint="@color/colorGray"
                     android:ems="10"
                     android:hint="*contact no.."
                     android:inputType="phone"
-                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/email_patients" />
 
-                <Button
-                    android:id="@+id/confirm_btn"
-                    android:layout_width="0dp"
+
+                <!--<Button-->
+                    <!--android:id="@+id/confirm_btn"-->
+                    <!--android:layout_width="0dp"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_marginStart="8dp"-->
+                    <!--android:layout_marginEnd="8dp"-->
+                    <!--android:layout_marginBottom="8dp"-->
+                    <!--android:background="@drawable/gradient_color_background"-->
+                    <!--android:text="confirm"-->
+                    <!--android:textColor="#ffffff"-->
+                    <!--android:visibility="gone"-->
+                    <!--app:layout_constraintBottom_toBottomOf="parent"-->
+                    <!--app:layout_constraintEnd_toEndOf="parent"-->
+                    <!--app:layout_constraintStart_toStartOf="parent" />-->
+
+                <EditText
+                    android:id="@+id/paymentReason"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginEnd="8dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="16dp"
                     android:layout_marginBottom="8dp"
-                    android:background="@drawable/gradient_color_background"
-                    android:text="confirm"
-                    android:textColor="#ffffff"
-                    android:visibility="gone"
+                    android:drawableRight="@drawable/ic_edit_black_24dp"
+                    android:drawableTint="@color/colorGray"
+                    android:ems="10"
+                    android:hint="*Reason Of Visit"
+                    android:inputType="textPersonName"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent" />
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/phone_patients" />
 
                 <TextView
                     android:id="@+id/address"
